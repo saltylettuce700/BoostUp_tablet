@@ -1,6 +1,5 @@
 package com.example.boostup_tablet.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -12,17 +11,23 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.boostup_tablet.R;
 
-public class home_tech_activity extends AppCompatActivity {
+public class home_dueno_activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_home_tech);
+        setContentView(R.layout.activity_home_dueno);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        findViewById(R.id.reporte_ventas_section).setOnClickListener(v -> {
+            // Acción para reporte de ventas
+            //startActivity(new Intent(this, ReporteVentasActivity.class));
+            Toast.makeText(this, "Reporte VEntas", Toast.LENGTH_SHORT).show();
         });
 
         findViewById(R.id.inventario_section).setOnClickListener(v -> {
