@@ -86,7 +86,8 @@
             android:selectAllOnFocus="false"
             android:textAlignment="textStart"
             android:textColor="#000000"
-            android:textSize="48sp" />
+            android:textSize="48sp"
+            android:paddingLeft="16dp"/>
 
         <TextView
             android:id="@+id/TV_contraseña"
@@ -108,7 +109,8 @@
             android:inputType="text|textWebPassword"
             android:padding="10dp"
             android:textColor="#000000"
-            android:textSize="48sp" />
+            android:textSize="48sp"
+            android:paddingLeft="16dp"/>
 
         <ImageView
             android:id="@+id/btn_next"

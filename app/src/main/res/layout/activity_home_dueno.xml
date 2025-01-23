@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".Activity.home_tech_activity">
+    tools:context=".Activity.home_dueno_activity">
 
     <!-- ScrollView para habilitar el desplazamiento -->
     <ScrollView
@@ -74,7 +74,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="114dp"
                     android:src="@drawable/btn_holder_bg" />
+
             </FrameLayout>
+
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -91,6 +93,37 @@
                 android:textColor="@color/black"
                 android:textSize="34sp"
                 android:textStyle="bold" />
+
+            <!-- Opción Resporte de Ventas -->
+            <LinearLayout
+                android:id="@+id/reporte_ventas_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_option_holder"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sales_icon" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:text="Reporte de Ventas"
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/forward_icon" />
+            </LinearLayout>
 
             <!-- Opción Inventario -->
             <LinearLayout
@@ -123,9 +156,21 @@
                     android:src="@drawable/forward_icon" />
             </LinearLayout>
 
+            <!-- Sección de Gestión de Fallos -->
+            <TextView
+                android:id="@+id/gestion_fallos_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:text="Gestión de Fallos"
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
             <!-- Opción Reportar Fallo -->
             <LinearLayout
-                android:id="@+id/asignar_section"
+                android:id="@+id/reportar_fallo_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/white_option_holder"
@@ -144,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="Asignar máquina"
+                    android:text="Reportar Fallo"
                     android:textColor="@color/black"
                     android:textSize="24sp" />
 
@@ -153,20 +198,6 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/forward_icon" />
             </LinearLayout>
-
-            <!-- Sección de Gestión de Fallos -->
-            <TextView
-                android:id="@+id/gestion_fallos_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp"
-                android:text="Gestión de Fallos"
-                android:textColor="@color/black"
-                android:textSize="34sp"
-                android:textStyle="bold" />
-
-
 
             <!-- Opción Historial de Fallos -->
             <LinearLayout
@@ -234,6 +265,5 @@
 
 
     </ScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
