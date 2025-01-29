@@ -13,7 +13,7 @@
         android:theme="@style/Theme.BoostUp_tablet"
         tools:targetApi="31">
         <activity
-            android:name=".Activity.ver_fallo_activity"
+            android:name=".Activity.historial_fallo_activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,26 +23,29 @@
 
         </activity>
         <activity
-            android:name=".Activity.dueno.reportar_fallo_activity"
+            android:name=".Activity.ver_fallo_activity"
             android:exported="true">
 
         </activity>
         <activity
+            android:name=".Activity.dueno.reportar_fallo_activity"
+            android:exported="true"></activity>
+        <activity
             android:name=".Activity.asignar_maquina_activity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar.FullScreen"/>
+            android:theme="@style/AppTheme.NoActionBar.FullScreen" />
         <activity
             android:name=".Activity.no_ingrediente_activity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar.FullScreen"></activity>
+            android:theme="@style/AppTheme.NoActionBar.FullScreen" />
         <activity
             android:name=".Activity.home_dueno_activity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar.FullScreen"/>
+            android:theme="@style/AppTheme.NoActionBar.FullScreen" />
         <activity
             android:name=".Activity.home_tech_activity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar.FullScreen"/>
+            android:theme="@style/AppTheme.NoActionBar.FullScreen" />
         <activity
             android:name=".Activity.signin_dueno_Activity"
             android:exported="false"

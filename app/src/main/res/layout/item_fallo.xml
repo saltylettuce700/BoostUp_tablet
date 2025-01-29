@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_gray"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Título del fallo -->
+        <TextView
+            android:id="@+id/tv_titulo_fallo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:paddingBottom="8dp"
+            android:text="Fallo - Conexión con la Base de Datos"
+            android:textColor="@color/black"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <!-- Fecha -->
+        <TextView
+            android:id="@+id/tv_fecha_fallo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_textview"
+            android:padding="12dp"
+            android:text="Fecha: jueves, 5 de diciembre de 2024"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <!-- Hora -->
+        <TextView
+            android:id="@+id/tv_hora_fallo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_textview"
+            android:padding="12dp"
+            android:text="Hora: 9:44 p.m. - Zona horaria de Guadalajara, Jal. (GMT-6)"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <!-- Ver detalles -->
+        <TextView
+            android:id="@+id/tv_ver_detalles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="8dp"
+            android:text="Ver Detalles"
+            android:textColor="@color/base_blue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
