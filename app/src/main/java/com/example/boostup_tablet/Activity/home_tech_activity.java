@@ -31,7 +31,7 @@ public class home_tech_activity extends AppCompatActivity {
             Toast.makeText(this, "Inventario", Toast.LENGTH_SHORT).show();
         });
 
-        findViewById(R.id.reportar_fallo_section).setOnClickListener(v -> {
+        findViewById(R.id.asignar_section).setOnClickListener(v -> {
             // Acción para Reportar Fallo
             //startActivity(new Intent(this, ReportarFalloActivity.class));
             Toast.makeText(this, "Reportar fallo", Toast.LENGTH_SHORT).show();

@@ -4,4 +4,10 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="BlurBackgroundDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

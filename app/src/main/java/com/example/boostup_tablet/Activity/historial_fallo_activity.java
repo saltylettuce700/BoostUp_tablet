@@ -38,7 +38,6 @@ public class historial_fallo_activity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.RV_historial);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         listaFallos = new ArrayList<>();
         listaFallos.add(new Fallo("Fallo - Conexión con la Base de Datos", "jueves, 5 de diciembre de 2024", "9:44 p.m. - Zona horaria de Guadalajara, Jal. (GMT-6)"));
         listaFallos.add(new Fallo("Error en Servidor", "viernes, 6 de diciembre de 2024", "10:30 a.m. - GMT-6"));
