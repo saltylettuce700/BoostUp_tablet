@@ -5,11 +5,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.asignar_maquina_activity">
+    tools:context=".Activity.tecnico.asignar_maquina_activity">
 
 
     <LinearLayout
-        android:layout_width="1961dp"
+        android:layout_width="1960dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
