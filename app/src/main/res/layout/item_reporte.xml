@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardBackgroundColor="@color/dark_gray"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="24dp">
+
+        <!-- Contenedor izquierdo -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:text="Reporte de venta Mensual - Enero 2024"
+                android:textColor="@android:color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvGananciasMes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/btn_holder_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="Ganancias del mes: "
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvCantidadPedidosMes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/btn_holder_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="Cantidad de pedidos del mes: "
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+
+        </LinearLayout>
+
+        <!-- Contenedor derecho -->
+        <View
+            android:id="@+id/imagePlaceholder"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/btn_holder_bg" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
