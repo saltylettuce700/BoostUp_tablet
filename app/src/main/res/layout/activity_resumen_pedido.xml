@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.resumen_pedido_activity">
+
+
+    <LinearLayout
+        android:layout_width="1450dp"
+        android:layout_height="800dp"
+        android:background="#009688"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/izquierda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="78dp"
+                    android:paddingRight="78dp"
+                    android:paddingTop="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <ImageButton
+                        android:id="@+id/imageButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="start"
+                        app:srcCompat="@drawable/back_act_icon" />
+
+                    <TextView
+                        android:id="@+id/TV_bebidaUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="16dp"
+                        android:text="Bebida Username"
+                        android:textColor="@color/black"
+                        android:textSize="48sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvProductPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="4dp"
+                        android:paddingBottom="16dp"
+                        android:text="$70.00"
+                        android:textColor="@color/black"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvOrderDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Fecha de creación del pedido: 18/11/2024"
+                        android:textColor="@color/black"
+                        android:textSize="24sp" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="36dp"
+                        android:background="@color/base_gray" />
+
+                    <TextView
+                        android:id="@+id/TV_proteinasection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="Proteína"
+                        android:textColor="@color/black"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        android:id="@+id/protein_section"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/white_btn_holder"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/tvNombreProteina"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Proteina Vegetal WHey"
+                                android:textColor="@color/black"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvCantidadProteina"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/btn_holder_bg"
+                                android:paddingLeft="8dp"
+                                android:paddingRight="8dp"
+                                android:text="Cantidad: "
+                                android:textColor="@color/black"
+                                android:textSize="24sp" />
+
+                            <TextView
+                                android:id="@+id/tvMarcaProteina"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/btn_holder_bg"
+                                android:paddingLeft="8dp"
+                                android:paddingRight="8dp"
+                                android:text="Marca: Vegetal"
+                                android:textColor="@color/black"
+                                android:textSize="24sp" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imgProteina"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/btn_holder_bg" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/TV_saborizantesection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="Saborizante"
+                        android:textColor="@color/black"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        android:id="@+id/sabor_section"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/white_btn_holder"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/tvSabor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Saborizante: Fresa"
+                                android:textColor="@color/black"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvTipoSaborizante"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/btn_holder_bg"
+                                android:paddingLeft="8dp"
+                                android:paddingRight="8dp"
+                                android:text="Tipo: del que sabe"
+                                android:textColor="@color/black"
+                                android:textSize="24sp" />
+
+                            <TextView
+                                android:id="@+id/tvMarcaSaborizante"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/btn_holder_bg"
+                                android:paddingLeft="8dp"
+                                android:paddingRight="8dp"
+                                android:text="Marca: Vegetal"
+                                android:textColor="@color/black"
+                                android:textSize="24sp" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imgSaborizante"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/btn_holder_bg" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/TV_Curcumasection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:paddingBottom="16dp"
+                        android:text="Cúrcuma y Jengibre"
+                        android:textColor="@color/black"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        android:id="@+id/curcuma_section"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/white_btn_holder"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/tvMarcaCurcuma"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Marca bien chida"
+                                android:textColor="@color/black"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvCantidadCurcuma"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/btn_holder_bg"
+                                android:paddingLeft="8dp"
+                                android:paddingRight="8dp"
+                                android:text="Cantidad: un chingo"
+                                android:textColor="@color/black"
+                                android:textSize="24sp" />
+
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imgCurcuma"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/btn_holder_bg" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/bebida_img"
+                android:scaleType="centerCrop" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="200dp"
+                android:layout_height="70dp"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="32dp"
+                android:backgroundTint="#FF5722"
+                android:text="Siguiente"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:icon="@drawable/forward_icon"
+                app:iconTint="@color/white" />
+        </FrameLayout>
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

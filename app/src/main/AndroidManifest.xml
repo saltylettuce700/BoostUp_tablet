@@ -13,9 +13,8 @@
         android:theme="@style/Theme.BoostUp_tablet"
         tools:targetApi="31">
         <activity
-            android:name=".Activity.inventario_activity"
+            android:name=".Activity.resumen_pedido_activity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,13 +23,17 @@
 
         </activity>
         <activity
-            android:name=".Activity.historial_fallo_activity"
+            android:name=".Activity.inventario_activity"
             android:exported="true">
 
         </activity>
+
+        <activity
+            android:name=".Activity.historial_fallo_activity"
+            android:exported="true"></activity>
         <activity
             android:name=".Activity.ver_fallo_activity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Activity.dueno.reportar_fallo_activity"
             android:exported="true" />
