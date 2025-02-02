@@ -1,4 +1,4 @@
-package com.example.boostup_tablet.Activity;
+package com.example.boostup_tablet.Activity.dueno;
 
 import android.os.Bundle;
 import android.widget.Toast;

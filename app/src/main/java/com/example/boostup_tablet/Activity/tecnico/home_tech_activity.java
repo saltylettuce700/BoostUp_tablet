@@ -1,6 +1,5 @@
-package com.example.boostup_tablet.Activity;
+package com.example.boostup_tablet.Activity.tecnico;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
