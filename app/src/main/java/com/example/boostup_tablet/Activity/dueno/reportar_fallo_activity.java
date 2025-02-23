@@ -1,5 +1,6 @@
 package com.example.boostup_tablet.Activity.dueno;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,6 +35,14 @@ public class reportar_fallo_activity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+
+        });
+
+        findViewById(R.id.button2).setOnClickListener(v -> {
+            //mandar cambios
+            finish();
+            startActivity(new Intent(this, home_dueno_activity.class));
+            Toast.makeText(this, "mandar cambios", Toast.LENGTH_SHORT).show();
         });
 
         EditText editText = findViewById(R.id.ET_descripcion);
@@ -61,6 +70,8 @@ public class reportar_fallo_activity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                //nada lol
             }
+
+
 
         });
 
