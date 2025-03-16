@@ -1,13 +1,19 @@
 package com.example.boostup_tablet.Adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.boostup_tablet.Activity.dueno.home_dueno_activity;
+import com.example.boostup_tablet.Activity.ver_fallo_activity;
 import com.example.boostup_tablet.R;
 
 import java.util.List;
@@ -41,8 +47,18 @@ public class FalloAdapter extends RecyclerView.Adapter<FalloAdapter.FalloViewHol
         holder.tvTitulo.setText(fallo.getTitulo());
         holder.tvFecha.setText("Fecha: " + fallo.getFecha());
         holder.tvHora.setText("Hora: " + fallo.getHora());
+        holder.tvEstado.setText("Arreglado");
 
-        holder.tvVerDetalles.setOnClickListener(v -> listener.onVerDetallesClick(fallo));
+
+        holder.tvVerDetalles.setOnClickListener(v -> {
+            Intent intent = new Intent(holder.itemView.getContext(), ver_fallo_activity.class);
+            intent.putExtra("titulo", fallo.getTitulo());
+            intent.putExtra("fecha", fallo.getFecha());
+            intent.putExtra("hora", fallo.getHora());
+            holder.itemView.getContext().startActivity(intent);
+        });
+
+
     }
 
     @Override
@@ -51,13 +67,14 @@ public class FalloAdapter extends RecyclerView.Adapter<FalloAdapter.FalloViewHol
     }
 
     public static class FalloViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitulo, tvFecha, tvHora, tvVerDetalles;
+        TextView tvTitulo, tvFecha, tvHora, tvVerDetalles, tvEstado;
 
         public FalloViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitulo = itemView.findViewById(R.id.tv_titulo_fallo);
             tvFecha = itemView.findViewById(R.id.tv_fecha_fallo);
             tvHora = itemView.findViewById(R.id.tv_hora_fallo);
+            tvEstado = itemView.findViewById(R.id.tv_estado);
             tvVerDetalles = itemView.findViewById(R.id.tv_ver_detalles);
         }
     }
