@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.boostup_tablet.Activity.dueno.home_dueno_activity;
+import com.example.boostup_tablet.Activity.tecnico.home_tech_activity;
 import com.example.boostup_tablet.R;
 
 public class signin_tech_Activity extends AppCompatActivity {
@@ -27,7 +28,7 @@ public class signin_tech_Activity extends AppCompatActivity {
         });
 
         findViewById(R.id.btn_next).setOnClickListener(v -> {
-            startActivity(new Intent(this, signin_tech_Activity.class));
+            startActivity(new Intent(this, home_tech_activity.class));
             Toast.makeText(this, "IR A PERFIL", Toast.LENGTH_SHORT).show();
         });
     }

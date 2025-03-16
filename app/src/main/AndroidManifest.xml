@@ -40,11 +40,7 @@
         <activity
             android:name=".Activity.reporte_ventas_activity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -89,7 +85,13 @@
         <activity
             android:name=".Activity.signin_tech_Activity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar.FullScreen" />
+            android:theme="@style/AppTheme.NoActionBar.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activity.Idle_Activity"
             android:exported="true"
