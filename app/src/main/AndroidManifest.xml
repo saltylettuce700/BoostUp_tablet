@@ -6,6 +6,7 @@
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.hardware.camera"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -64,8 +65,14 @@
             android:exported="true" />
         <activity
             android:name=".Activity.tecnico.asignar_maquina_activity"
-            android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar.FullScreen" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activity.no_ingrediente_activity"
             android:exported="true"
@@ -92,12 +99,6 @@
             android:name=".Activity.Idle_Activity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar.FullScreen">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
     </application>
