@@ -83,12 +83,12 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/ET_newcorreo"
+                android:id="@+id/ET_numMaquina"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/et_holder_gray_rectangle"
                 android:ems="10"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:paddingLeft="16dp"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp" />
