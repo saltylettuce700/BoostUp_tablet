@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.boostup_tablet.Activity.Idle_Activity;
+import com.example.boostup_tablet.Activity.inventario_activity;
 import com.example.boostup_tablet.ConexionBD.Preferences;
 import com.example.boostup_tablet.R;
 
@@ -32,17 +35,48 @@ public class asignar_maquina_activity extends AppCompatActivity {
             return insets;
         });
 
+        //Si no hay id...
+        bt_asignar = findViewById(R.id.button);
+        et_numMaquina = findViewById(R.id.ET_numMaquina);
+
+        // Obtener referencias de los elementos
+        ImageButton imageButton = findViewById(R.id.imageButton);
+        TextView textView8 = findViewById(R.id.textView8);
+        EditText etNewPassword = findViewById(R.id.ET_newpassword);
+
         //Checa si hay id asignado
         Preferences preferences = new Preferences(this);
 
-        if (preferences.obtenerNumMaquina()!= 0){
+        // Verificar si vino desde "home_tech_activity"
+        String from = getIntent().getStringExtra("from");
+
+        if ("home_tech".equals(from)) {
+
+            imageButton.setVisibility(View.VISIBLE);
+            textView8.setVisibility(View.VISIBLE);
+            etNewPassword.setVisibility(View.VISIBLE);
+        } else {
+            imageButton.setVisibility(View.GONE);
+            textView8.setVisibility(View.GONE);
+            etNewPassword.setVisibility(View.GONE);
+        }
+
+        if (!"home_tech".equals(from) && preferences.obtenerNumMaquina() != 0) {
             startActivity(new Intent(this, Idle_Activity.class));
             Toast.makeText(this, "maquina: " + preferences.obtenerNumMaquina(), Toast.LENGTH_SHORT).show();
         }
 
-        //Si no hay id...
-        bt_asignar = findViewById(R.id.button);
-        et_numMaquina = findViewById(R.id.ET_numMaquina);
+
+
+        findViewById(R.id.imageButton).setOnClickListener(v -> {
+            // BACK
+            finish();
+            startActivity(new Intent(this, home_tech_activity.class));
+            Toast.makeText(this, "Inventario", Toast.LENGTH_SHORT).show();
+        });
+
+
+
 
         bt_asignar.setOnClickListener(new View.OnClickListener() {
             @Override

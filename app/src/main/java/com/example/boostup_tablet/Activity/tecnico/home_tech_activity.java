@@ -36,7 +36,10 @@ public class home_tech_activity extends AppCompatActivity {
 
         findViewById(R.id.asignar_section).setOnClickListener(v -> {
             // Acción para Reportar Fallo
-            startActivity(new Intent(this, asignar_maquina_activity.class));
+            Intent intent = new Intent(this, asignar_maquina_activity.class);
+            intent.putExtra("from", "home_tech");
+            startActivity(intent);
+
             Toast.makeText(this, "Reportar fallo", Toast.LENGTH_SHORT).show();
 
         });

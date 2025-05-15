@@ -5,13 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+
     tools:context=".Activity.tecnico.asignar_maquina_activity">
 
 
     <LinearLayout
-        android:layout_width="1960dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_width="1450dp"
+        android:layout_height="800dp"
+
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,8 +22,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="1350dp"
-            android:layout_height="260dp"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
             android:background="@color/base_gray"
             android:orientation="vertical"
             android:paddingLeft="58dp"
@@ -36,6 +38,7 @@
                 android:id="@+id/imageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 app:srcCompat="@drawable/back_act_icon" />
 
             <TextView
@@ -58,9 +61,9 @@
 
         <LinearLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="1350dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
 
             android:orientation="vertical"
             android:paddingLeft="38dp"
@@ -108,19 +111,25 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/et_holder_gray_rectangle"
                 android:ems="10"
-                android:inputType="textPassword"
+                android:inputType="text"
                 android:paddingLeft="16dp"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="120dp" />
+
             <Button
                 android:id="@+id/button"
                 android:layout_width="200dp"
-                android:layout_height="wrap_content"
+                android:layout_height="66dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/orange"
                 android:text="Asignar"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:iconTint="@color/orange" />
 
         </LinearLayout>
 
