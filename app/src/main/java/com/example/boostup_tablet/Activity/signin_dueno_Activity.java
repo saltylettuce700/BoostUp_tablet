@@ -53,10 +53,9 @@ public class signin_dueno_Activity extends AppCompatActivity {
                 BD bd = new BD(this);
                 bd.iniciarSesionOwner(userOwner, passOwner, new BD.LoginCallback() {
                     @Override
-                    public void onLoginSuccess() {
+                    public void onLoginSuccess(String token) {
                         Intent intent = new Intent(signin_dueno_Activity.this, home_dueno_activity.class);
-                        intent.putExtra("userOwner", userOwner);
-                        intent.putExtra("userPass", passOwner);
+                        intent.putExtra("tokenOwner", token);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }

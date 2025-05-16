@@ -52,10 +52,9 @@ public class signin_tech_Activity extends AppCompatActivity {
                 BD bd = new BD(this);
                     bd.iniciarSesionTecnico(userTech, passTech, new BD.LoginCallback() {
                     @Override
-                    public void onLoginSuccess() {
+                    public void onLoginSuccess(String token) {
                         Intent intent = new Intent(signin_tech_Activity.this, home_tech_activity.class);
-                        intent.putExtra("userOwner", userTech);
-                        intent.putExtra("userPass", passTech);
+                        intent.putExtra("tokenTech", token);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }

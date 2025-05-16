@@ -92,7 +92,7 @@ public class BD {
     /*------------------Autentificaciones-------------------------------*/
 
     public interface LoginCallback {
-        void onLoginSuccess();
+        void onLoginSuccess(String token);
         void onLoginFailed();
     }
 
@@ -104,7 +104,7 @@ public class BD {
                 runOnUiThread(() -> {
                     // Mostrar mensaje
                     Toast.makeText(context, "Sesion dueño iniciada", Toast.LENGTH_SHORT).show();
-                    callback.onLoginSuccess();
+                    callback.onLoginSuccess(token);
                 });
             }
 
@@ -180,7 +180,7 @@ public class BD {
                 runOnUiThread(() -> {
                     // Mostrar mensaje
                     Toast.makeText(context, "Sesion tecnico iniciada", Toast.LENGTH_SHORT).show();
-                    callback.onLoginSuccess();
+                    callback.onLoginSuccess(token);
                 });
             }
 
