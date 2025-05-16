@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,6 +85,26 @@ public class BD {
                 .addHeader("accept", "application/json")
                 .addHeader("Content-Type", "application/json")
                 .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    private void authGetRequest(String token, String route, Callback callback) {
+
+        if (token == null || token.isEmpty()) {
+            callback.onFailure(null, new IOException("Token no encontrado"));
+            return;
+        }
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + route)
+                .addHeader("accept", "application/json")
+                .addHeader("Authorization", "Bearer " + token)
+                .addHeader("Content-Type", "application/json")
+                .get()
                 .build();
 
         client.newCall(request).enqueue(callback);
@@ -238,6 +259,60 @@ public class BD {
                     } catch (JSONException e) {
                         runOnUiThread(()-> callback.onFailure("JSON parsing error"));
                     }
+                }
+            }
+        });
+    }
+
+    /*------------------GETS-------------------------------*/
+
+    public void getInfoOwner(String token, JsonCallback callback){
+        String ruta = "owner/yo/";
+
+        authGetRequest(token, ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onError("Error de conexión");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    try {
+                        JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+                        callback.onSuccess(obj);
+                    } catch (Exception e) {
+                        callback.onError("Error al procesar los datos");
+                    }
+                } else {
+                    callback.onError("Error en la respuesta del servidor");
+                }
+            }
+        });
+    }
+
+    public void getInfoTech(String token, JsonCallback callback){
+        String ruta = "technician/yo/";
+
+        authGetRequest(token, ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onError("Error de conexión");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    try {
+                        JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+                        callback.onSuccess(obj);
+                    } catch (Exception e) {
+                        callback.onError("Error al procesar los datos");
+                    }
+                } else {
+                    callback.onError("Error en la respuesta del servidor");
                 }
             }
         });
