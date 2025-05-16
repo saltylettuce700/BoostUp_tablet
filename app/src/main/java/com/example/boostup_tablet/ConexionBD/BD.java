@@ -2,7 +2,6 @@ package com.example.boostup_tablet.ConexionBD;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
 import com.example.boostup_tablet.Activity.dueno.home_dueno_activity;
@@ -294,6 +293,32 @@ public class BD {
 
     public void getInfoTech(String token, JsonCallback callback){
         String ruta = "technician/yo/";
+
+        authGetRequest(token, ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onError("Error de conexión");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    try {
+                        JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+                        callback.onSuccess(obj);
+                    } catch (Exception e) {
+                        callback.onError("Error al procesar los datos");
+                    }
+                } else {
+                    callback.onError("Error en la respuesta del servidor");
+                }
+            }
+        });
+    }
+
+    public void getInfoMaquina(String token, JsonCallback callback){
+        String ruta = "technician/maquina/info/";
 
         authGetRequest(token, ruta, new Callback() {
             @Override
