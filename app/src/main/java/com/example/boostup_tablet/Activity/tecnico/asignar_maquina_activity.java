@@ -17,8 +17,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.boostup_tablet.Activity.Idle_Activity;
 import com.example.boostup_tablet.Activity.inventario_activity;
+import com.example.boostup_tablet.ConexionBD.BD;
 import com.example.boostup_tablet.ConexionBD.Preferences;
 import com.example.boostup_tablet.R;
+import com.google.gson.JsonObject;
 
 public class asignar_maquina_activity extends AppCompatActivity {
     Button bt_asignar;
@@ -34,6 +36,9 @@ public class asignar_maquina_activity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent intent1 = getIntent();
+        String token =  intent1.getStringExtra("tokenTech");
 
         //Si no hay id...
         bt_asignar = findViewById(R.id.button);
@@ -55,6 +60,25 @@ public class asignar_maquina_activity extends AppCompatActivity {
             imageButton.setVisibility(View.VISIBLE);
             textView8.setVisibility(View.VISIBLE);
             etNewPassword.setVisibility(View.VISIBLE);
+
+            BD bd = new BD(this);
+            bd.getInfoMaquina(token, new BD.JsonCallback() {
+                @Override
+                public void onSuccess(JsonObject obj) {
+                    runOnUiThread(()->{
+                        String id_maquina = obj.get("id_maquina").getAsString();
+                        String ubicacion = obj.get("ubicacion").getAsString();
+                        et_numMaquina.setText(id_maquina);
+                        etNewPassword.setText(ubicacion);
+                    });
+                }
+
+                @Override
+                public void onError(String mensaje) {
+                    Toast.makeText(asignar_maquina_activity.this, "Error al obtener la info", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         } else {
             imageButton.setVisibility(View.GONE);
             textView8.setVisibility(View.GONE);
@@ -71,7 +95,9 @@ public class asignar_maquina_activity extends AppCompatActivity {
         findViewById(R.id.imageButton).setOnClickListener(v -> {
             // BACK
             finish();
-            startActivity(new Intent(this, home_tech_activity.class));
+            Intent intent = new Intent(this, home_tech_activity.class);
+            intent.putExtra("tokenTech", token);
+            startActivity(intent);
             Toast.makeText(this, "Inventario", Toast.LENGTH_SHORT).show();
         });
 

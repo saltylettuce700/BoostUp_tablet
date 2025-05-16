@@ -69,6 +69,7 @@ public class home_tech_activity extends AppCompatActivity {
             // Acción para Reportar Fallo
             Intent intent = new Intent(this, asignar_maquina_activity.class);
             intent.putExtra("from", "home_tech");
+            intent.putExtra("tokenTech", token);
             startActivity(intent);
 
             Toast.makeText(this, "Reportar fallo", Toast.LENGTH_SHORT).show();
