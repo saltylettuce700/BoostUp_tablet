@@ -66,6 +66,7 @@ public class leer_qr_activity extends AppCompatActivity {
             String contents = intentResult.getContents();
             if(contents != null){
                 textView.setText(intentResult.getContents());
+                //intentResult es lo que lee el qr pero hay que pasarlo a string
             }
         }else{
             super.onActivityResult(requestCode, resultCode, data);
