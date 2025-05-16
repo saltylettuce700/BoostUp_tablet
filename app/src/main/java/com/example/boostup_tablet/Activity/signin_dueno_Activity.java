@@ -2,6 +2,7 @@ package com.example.boostup_tablet.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -13,11 +14,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.boostup_tablet.Activity.dueno.home_dueno_activity;
+import com.example.boostup_tablet.ConexionBD.BD;
 import com.example.boostup_tablet.R;
 
 public class signin_dueno_Activity extends AppCompatActivity {
 
     ImageView btn_options;
+    EditText et_user, et_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,9 @@ public class signin_dueno_Activity extends AppCompatActivity {
         btn_options = findViewById(R.id.btn_options);
         btn_options.setClickable(true);
 
+        et_user = findViewById(R.id.ET_usuarioOwner);
+        et_pass = findViewById(R.id.ET_Password);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -35,8 +41,35 @@ public class signin_dueno_Activity extends AppCompatActivity {
         });
 
         findViewById(R.id.btn_next).setOnClickListener(v -> {
-            startActivity(new Intent(this, home_dueno_activity.class));
-            Toast.makeText(this, "IR A PERFIL", Toast.LENGTH_SHORT).show();
+
+            if (et_user.getText().toString().isEmpty()){
+                Toast.makeText(this, "Ingresar Usuario", Toast.LENGTH_SHORT).show();
+            } else if (et_pass.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Ingresar Contraseña", Toast.LENGTH_SHORT).show();
+            } else {
+                String userOwner = et_user.getText().toString();
+                String passOwner = et_pass.getText().toString();
+
+                BD bd = new BD(this);
+                bd.iniciarSesionOwner(userOwner, passOwner, new BD.LoginCallback() {
+                    @Override
+                    public void onLoginSuccess() {
+                        Intent intent = new Intent(signin_dueno_Activity.this, home_dueno_activity.class);
+                        intent.putExtra("userOwner", userOwner);
+                        intent.putExtra("userPass", passOwner);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLoginFailed() {
+                        Toast.makeText(signin_dueno_Activity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+            /*startActivity(new Intent(this, home_dueno_activity.class));
+            Toast.makeText(this, "IR A PERFIL", Toast.LENGTH_SHORT).show();*/
         });
 
         btn_options.setOnClickListener(v -> {
