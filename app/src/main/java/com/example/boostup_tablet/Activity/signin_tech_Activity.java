@@ -2,6 +2,7 @@ package com.example.boostup_tablet.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -14,17 +15,17 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.boostup_tablet.Activity.dueno.home_dueno_activity;
 import com.example.boostup_tablet.Activity.tecnico.home_tech_activity;
+import com.example.boostup_tablet.ConexionBD.BD;
 import com.example.boostup_tablet.R;
 
 public class signin_tech_Activity extends AppCompatActivity {
 
     ImageView btn_options;
+    EditText et_user, et_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_signin_tech);
@@ -36,9 +37,38 @@ public class signin_tech_Activity extends AppCompatActivity {
 
         btn_options = findViewById(R.id.btn_options);
 
+        et_user = findViewById(R.id.ET_usuarioTech);
+        et_pass = findViewById(R.id.ET_Password);
+
         findViewById(R.id.btn_next).setOnClickListener(v -> {
-            startActivity(new Intent(this, home_tech_activity.class));
-            Toast.makeText(this, "IR A PERFIL", Toast.LENGTH_SHORT).show();
+            if (et_user.getText().toString().isEmpty()){
+                Toast.makeText(this, "Ingresar Usuario", Toast.LENGTH_SHORT).show();
+            } else if (et_pass.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Ingresar Contraseña", Toast.LENGTH_SHORT).show();
+            } else {
+                String userTech = et_user.getText().toString();
+                String passTech = et_pass.getText().toString();
+
+                BD bd = new BD(this);
+                    bd.iniciarSesionTecnico(userTech, passTech, new BD.LoginCallback() {
+                    @Override
+                    public void onLoginSuccess() {
+                        Intent intent = new Intent(signin_tech_Activity.this, home_tech_activity.class);
+                        intent.putExtra("userOwner", userTech);
+                        intent.putExtra("userPass", passTech);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLoginFailed() {
+                        Toast.makeText(signin_tech_Activity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+            /*startActivity(new Intent(this, home_tech_activity.class));
+            Toast.makeText(this, "IR A PERFIL", Toast.LENGTH_SHORT).show();*/
         });
 
         btn_options.setOnClickListener(v -> {
