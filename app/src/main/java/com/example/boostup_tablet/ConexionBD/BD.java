@@ -171,4 +171,76 @@ public class BD {
             }
         });
     }
+
+    public void iniciarSesionTecnico (String user, String pass, LoginCallback callback){
+
+        getAuthTokenTecnico(user, pass, new AuthCallback() {
+            @Override
+            public void onSuccess(String token) {
+                runOnUiThread(() -> {
+                    // Mostrar mensaje
+                    Toast.makeText(context, "Sesion tecnico iniciada", Toast.LENGTH_SHORT).show();
+                    callback.onLoginSuccess();
+                });
+            }
+
+            @Override
+            public void onFailure(String error) {
+                runOnUiThread(() -> {
+                    callback.onLoginFailed();
+                });
+            }
+        });
+    }
+
+    public void getAuthTokenTecnico(String username, String password, AuthCallback callback){
+        String ruta = BASE_URL + "technician/token/";
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("grant_type", "password")
+                .add("username", username)
+                .add("password", password)
+                .add("scope", "")
+                .add("client_id", "string")
+                .add("client_secret", "string")
+                .build();
+        Request request = new Request.Builder()
+                .url(ruta)
+                .addHeader("accept", "application/json")
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() -> callback.onFailure("Network error: " + e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()){
+                    if (!response.isSuccessful()){
+                        runOnUiThread(() -> callback.onFailure("HTTP error: " + response.code()));
+                        return;
+                    }
+
+                    assert  responseBody != null;
+                    String responseData = responseBody.string();
+
+                    try {
+                        JSONObject json = new JSONObject(responseData);
+                        String token = json.optString("access_token");
+                        if (!token.isEmpty()){
+                            runOnUiThread(()-> callback.onSuccess(token));
+                        }else{
+                            runOnUiThread(()-> callback.onFailure("Invalid Token in response"));
+                        }
+                    } catch (JSONException e) {
+                        runOnUiThread(()-> callback.onFailure("JSON parsing error"));
+                    }
+                }
+            }
+        });
+    }
+
 }
