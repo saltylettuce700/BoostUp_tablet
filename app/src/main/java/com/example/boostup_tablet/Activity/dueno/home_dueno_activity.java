@@ -2,6 +2,7 @@ package com.example.boostup_tablet.Activity.dueno;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,9 +15,13 @@ import com.example.boostup_tablet.Activity.Idle_Activity;
 import com.example.boostup_tablet.Activity.historial_fallo_activity;
 import com.example.boostup_tablet.Activity.inventario_activity;
 import com.example.boostup_tablet.Activity.reporte_ventas_activity;
+import com.example.boostup_tablet.ConexionBD.BD;
 import com.example.boostup_tablet.R;
+import com.google.gson.JsonObject;
 
 public class home_dueno_activity extends AppCompatActivity {
+
+    TextView txt_username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,31 @@ public class home_dueno_activity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        Intent intent1 = getIntent();
+        String token = intent1.getStringExtra("tokenOwner");
+
+        txt_username = findViewById(R.id. textView4);
+
+        BD bd = new BD(this);
+
+        bd.getInfoOwner(token, new BD.JsonCallback() {
+            @Override
+            public void onSuccess(JsonObject obj) {
+                runOnUiThread(()->{
+                    String username = obj.get("username").getAsString();
+
+                    txt_username.setText(username);
+                });
+            }
+
+            @Override
+            public void onError(String mensaje) {
+                runOnUiThread(() -> {
+                    Toast.makeText(home_dueno_activity.this, mensaje, Toast.LENGTH_SHORT).show();
+                });
+            }
         });
 
         findViewById(R.id.reporte_ventas_section).setOnClickListener(v -> {
