@@ -79,10 +79,39 @@ public class asignar_maquina_activity extends AppCompatActivity {
                 }
             });
 
+            bt_asignar.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    if (!etNewPassword.getText().toString().isEmpty()){
+                        bd.CambiarUbicacionMaquina(etNewPassword.getText().toString(), token);
+                    } else {
+                        Toast.makeText(asignar_maquina_activity.this, "Asigne la ubicacion", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
         } else {
             imageButton.setVisibility(View.GONE);
             textView8.setVisibility(View.GONE);
             etNewPassword.setVisibility(View.GONE);
+
+            bt_asignar.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    if (et_numMaquina.getText().toString().isEmpty()){
+                        Toast.makeText(asignar_maquina_activity.this, "Favor de asignar id", Toast.LENGTH_SHORT).show();
+                    }else {
+                        int num_maquina = Integer.parseInt(et_numMaquina.getText().toString());
+                        preferences.guardarNumMaquina(num_maquina);
+                        Intent intent = new Intent(asignar_maquina_activity.this, Idle_Activity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            });
         }
 
         if (!"home_tech".equals(from) && preferences.obtenerNumMaquina() != 0) {
@@ -104,21 +133,7 @@ public class asignar_maquina_activity extends AppCompatActivity {
 
 
 
-        bt_asignar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (et_numMaquina.getText().toString().isEmpty()){
-                    Toast.makeText(asignar_maquina_activity.this, "Favor de asignar id", Toast.LENGTH_SHORT).show();
-                }else {
-                    int num_maquina = Integer.parseInt(et_numMaquina.getText().toString());
-                    preferences.guardarNumMaquina(num_maquina);
-                    Intent intent = new Intent(asignar_maquina_activity.this, Idle_Activity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        });
+
 
 
     }
