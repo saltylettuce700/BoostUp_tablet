@@ -135,6 +135,30 @@ public class BD {
         client.newCall(request).enqueue(callback);
     }
 
+    private void PostAuthRequest(String token, String route, JSONObject json, Callback callback) {
+
+
+        if (token == null || token.isEmpty()) {
+            callback.onFailure(null, new IOException("Token no encontrado"));
+            return;
+        }
+
+        OkHttpClient client = new OkHttpClient();
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+        RequestBody requestBody = RequestBody.create(JSON, json.toString());
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + route)
+                .addHeader("accept", "application/json")
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer " + token)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
     /*------------------Autentificaciones-------------------------------*/
 
     public interface LoginCallback {
@@ -369,6 +393,58 @@ public class BD {
         });
     }
 
+    public void getTiposFallos(String token, JsonArrayCallback callback){
+        String ruta = "owner_or_tech/tipos-fallo/";
+
+        authGetRequest(token, ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onError("Error de conexión");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    try {
+                        JsonArray array = JsonParser.parseString(json).getAsJsonArray();
+                        callback.onSuccess(array);
+                    } catch (Exception e) {
+                        callback.onError("Error al obtener los datos");
+                    }
+                } else {
+                    callback.onError("Error en la respuesta del servidor");
+                }
+            }
+        });
+    }
+
+    public void getFallosMaquina(String token, JsonArrayCallback callback){
+        String ruta = "owner_or_tech/maquina/fallos/";
+
+        authGetRequest(token, ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onError("Error de conexión");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    try {
+                        JsonArray array = JsonParser.parseString(json).getAsJsonArray();
+                        callback.onSuccess(array);
+                    } catch (Exception e) {
+                        callback.onError("Error al obtener los datos");
+                    }
+                } else {
+                    callback.onError("Error en la respuesta del servidor");
+                }
+            }
+        });
+    }
+
     /*------------------PUTS-------------------------------*/
 
     public void CambiarUbicacionMaquina(String ubi, String token){
@@ -401,5 +477,41 @@ public class BD {
 
     }
 
+    /*------------------POSTS-------------------------------*/
+
+    public void agregarFalloMaquina (String token, int tipo, String fec_hora, String descripcion, Callback callback){
+        String ruta = "owner_or_tech/maquina/fallos/";
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("tipo_fallo", tipo);
+            jsonObject.put("fec_hora", fec_hora);
+            jsonObject.put("descripcion", descripcion);
+        } catch (JSONException e) {
+            runOnUiThread(()->{
+                Toast.makeText(context, "Error al procesar el fallo", Toast.LENGTH_SHORT).show();
+                return;
+            });
+        }
+
+        PostAuthRequest(token, ruta, jsonObject, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(context, "Error al registrar el fallo", Toast.LENGTH_LONG).show();
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                runOnUiThread(() -> {
+                    Toast.makeText(context, "Fallo registrado", Toast.LENGTH_LONG).show();
+                });
+            }
+        });
+
+
+    }
 
 }
