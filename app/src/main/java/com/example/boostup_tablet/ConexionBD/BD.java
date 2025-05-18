@@ -109,6 +109,32 @@ public class BD {
         client.newCall(request).enqueue(callback);
     }
 
+    private void putAuthRequest(String token, String route, String jsonBody, Callback callback) {
+
+        if (token == null || token.isEmpty()) {
+            callback.onFailure(null, new IOException("Token no encontrado"));
+            return;
+        }
+
+        OkHttpClient client = new OkHttpClient();
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+        // Crear el cuerpo de la solicitud con el JSON
+        RequestBody body = RequestBody.create(JSON, jsonBody);
+
+        // Construir la solicitud PUT con el token de autenticación
+        Request request = new Request.Builder()
+                .url(BASE_URL + route)
+                .addHeader("accept", "application/json")
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer " + token)
+                .put(body)
+                .build();
+
+        // Realizar la llamada a la API
+        client.newCall(request).enqueue(callback);
+    }
+
     /*------------------Autentificaciones-------------------------------*/
 
     public interface LoginCallback {
@@ -342,5 +368,38 @@ public class BD {
             }
         });
     }
+
+    /*------------------PUTS-------------------------------*/
+
+    public void CambiarUbicacionMaquina(String ubi, String token){
+        String ruta = "technician/maquina/ubicacion/";
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("ubicacion", ubi);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String jsonBody = jsonObject.toString();
+
+        putAuthRequest(token, ruta, jsonBody, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(()->{
+                    Toast.makeText(context, "Fallo: "+e, Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                runOnUiThread(()->{
+                    Toast.makeText(context, "Ubicación modificada", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+
+    }
+
 
 }
