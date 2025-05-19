@@ -53,7 +53,7 @@
                     android:id="@+id/TV_nombreFallo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fallo - Conexión con la Base de Datos"
+                    android:text="Fallo - "
                     android:textColor="@color/black"
                     android:textSize="34sp"
                     android:textStyle="bold" />
@@ -84,13 +84,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                 app:layout_constraintVertical_bias="0.0">
 
-                <Switch
-                    android:id="@+id/switchEstado"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pendiente"
-                    android:textColor="@android:color/holo_red_dark"
-                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/textView7"
@@ -111,7 +104,6 @@
                     android:paddingLeft="16dp"
                     android:paddingTop="12dp"
                     android:paddingBottom="12dp"
-                    android:text="Zona horaria de Guadalajara, Jal. (GMT-6) - jueves, 5 de diciembre de 2024, 9:44 p.m."
                     android:textColor="@color/black"
                     android:textSize="24sp" />
 
@@ -137,7 +129,6 @@
                     android:paddingTop="12dp"
                     android:paddingRight="16dp"
                     android:paddingBottom="12dp"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus maximus gravida elit, in convallis sapien pellentesque ut. Donec ac rutrum metus. Nam pellentesque sodales nisi, sed fringilla dui fermentum at. Suspendisse nisl odio, ultricies non maximus non, rutrum in est."
                     android:textColor="@color/black"
                     android:textSize="24sp" />
 

@@ -53,16 +53,6 @@
             android:textColor="@color/black"
             android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/tv_estado"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:paddingBottom="8dp"
-            android:text="Arreglado"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
 
         <!-- Ver detalles -->
         <TextView
