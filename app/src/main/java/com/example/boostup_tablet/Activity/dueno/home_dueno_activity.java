@@ -61,26 +61,34 @@ public class home_dueno_activity extends AppCompatActivity {
 
         findViewById(R.id.reporte_ventas_section).setOnClickListener(v -> {
             // Acción para reporte de ventas
-            startActivity(new Intent(this, reporte_ventas_activity.class));
-            Toast.makeText(this, "Reporte VEntas", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, reporte_ventas_activity.class);
+            intent.putExtra("tokenOwner", token);
+            startActivity(intent);
+            Toast.makeText(this, "Reporte Ventas", Toast.LENGTH_SHORT).show();
         });
 
         findViewById(R.id.inventario_section).setOnClickListener(v -> {
             // Acción para Inventario
-            startActivity(new Intent(this, inventario_activity.class));
+            Intent intent = new Intent(this, inventario_activity.class);
+            intent.putExtra("tokenOwner", token);
+            startActivity(intent);
             Toast.makeText(this, "Inventario", Toast.LENGTH_SHORT).show();
         });
 
         findViewById(R.id.reportar_fallo_section).setOnClickListener(v -> {
             // Acción para Reportar Fallo
-            startActivity(new Intent(this, reportar_fallo_activity.class));
+            Intent intent = new Intent(this, reportar_fallo_activity.class);
+            intent.putExtra("tokenOwner", token);
+            startActivity(intent);
             Toast.makeText(this, "Reportar fallo", Toast.LENGTH_SHORT).show();
 
         });
 
         findViewById(R.id.historial_fallos_section).setOnClickListener(v -> {
             // Acción para Historial de Fallos
-            startActivity(new Intent(this, historial_fallo_activity.class));
+            Intent intent = new Intent(this, historial_fallo_activity.class);
+            intent.putExtra("tokenOwner", token);
+            startActivity(intent);
             Toast.makeText(this, "Historial de fallos", Toast.LENGTH_SHORT).show();
         });
 

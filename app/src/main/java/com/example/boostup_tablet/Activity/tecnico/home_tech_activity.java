@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.boostup_tablet.Activity.Idle_Activity;
 import com.example.boostup_tablet.Activity.dueno.home_dueno_activity;
+import com.example.boostup_tablet.Activity.dueno.reportar_fallo_activity;
 import com.example.boostup_tablet.Activity.historial_fallo_activity;
 import com.example.boostup_tablet.Activity.inventario_activity;
 import com.example.boostup_tablet.ConexionBD.BD;
@@ -61,7 +62,9 @@ public class home_tech_activity extends AppCompatActivity {
 
         findViewById(R.id.inventario_section).setOnClickListener(v -> {
             // Acción para Inventario
-            startActivity(new Intent(this, inventario_activity.class));
+            Intent intent = new Intent(this, inventario_activity.class);
+            intent.putExtra("tokenTech", token);
+            startActivity(intent);
             Toast.makeText(this, "Inventario", Toast.LENGTH_SHORT).show();
         });
 
@@ -76,9 +79,20 @@ public class home_tech_activity extends AppCompatActivity {
 
         });
 
+        findViewById(R.id.reportar_fallo_section).setOnClickListener(v -> {
+            // Acción para Reportar Fallo
+            Intent intent = new Intent(this, reportar_fallo_activity.class);
+            intent.putExtra("tokenTech", token);
+            startActivity(intent);
+            Toast.makeText(this, "Reportar fallo", Toast.LENGTH_SHORT).show();
+
+        });
+
         findViewById(R.id.historial_fallos_section).setOnClickListener(v -> {
             // Acción para Historial de Fallos
-            startActivity(new Intent(this, historial_fallo_activity.class));
+            Intent intent = new Intent(this, historial_fallo_activity.class);
+            intent.putExtra("tokenTech", token);
+            startActivity(intent);
             Toast.makeText(this, "Historial de fallos", Toast.LENGTH_SHORT).show();
         });
 
