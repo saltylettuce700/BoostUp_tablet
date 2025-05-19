@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -14,14 +15,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.boostup_tablet.ConexionBD.BD;
 import com.example.boostup_tablet.R;
+import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import android.os.Handler;
+
 
 public class leer_qr_activity extends AppCompatActivity {
 
     View mainLayout;
     TextView textView;
+    private Handler handler;
+    private Runnable runnable;
 
 
 
@@ -29,6 +37,17 @@ public class leer_qr_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+
+        handler = new Handler();
+        runnable = () -> {
+            Intent intent = new Intent(leer_qr_activity.this, Idle_Activity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        };
+
+        handler.postDelayed(runnable, 30000);
+
 
         setContentView(R.layout.activity_leer_qr);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -63,11 +82,57 @@ public class leer_qr_activity extends AppCompatActivity {
 
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if(intentResult != null){
-            String contents = intentResult.getContents();
+            String id_pedido = intentResult.getContents();
+            if (id_pedido !=null){
+                BD bd = new BD(this);
+
+                bd.getDetallesPedido(id_pedido, new BD.JsonCallback() {
+                    @Override
+                    public void onSuccess(JsonObject obj) {
+                        boolean esConsumible = obj.get("es_consumible").getAsBoolean();
+                        if (esConsumible){
+                            bd.VerificarInventario(id_pedido, new BD.BooleanCallback() {
+                                @Override
+                                public void onSuccess(boolean preparable) {
+                                    if (preparable) {
+                                        //Ir a resumen_pedido
+                                        handler.removeCallbacks(runnable);
+                                        Intent intent = new Intent(leer_qr_activity.this, resumen_pedido_activity.class);
+                                        intent.putExtra("id_pedido", id_pedido);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        //Ir a no_ingrediente_activity
+                                        handler.removeCallbacks(runnable);
+                                        Intent intent = new Intent(leer_qr_activity.this, no_ingrediente_activity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure() {
+                                    runOnUiThread(() -> Toast.makeText(leer_qr_activity.this, "Error al verificar inventario", Toast.LENGTH_SHORT).show());
+                                }
+                            });
+                        } else {
+                            // No es consumible
+                            runOnUiThread(() -> textView.setText("Solo 1 pedido cada 24 horas"));
+                        }
+                    }
+
+                    @Override
+                    public void onError(String mensaje) {
+
+                    }
+                });
+            }
+            /*String contents = intentResult.getContents();
             if(contents != null){
                 textView.setText(intentResult.getContents());
-                //intentResult es lo que lee el qr pero hay que pasarlo a string
-            }
+                //intentResult es lo que lee el qr pero hay que pasarlo a string*/
+
         }else{
             super.onActivityResult(requestCode, resultCode, data);
         }
