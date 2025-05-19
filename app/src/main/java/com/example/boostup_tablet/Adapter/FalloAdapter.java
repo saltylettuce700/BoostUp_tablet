@@ -47,15 +47,9 @@ public class FalloAdapter extends RecyclerView.Adapter<FalloAdapter.FalloViewHol
         holder.tvTitulo.setText(fallo.getTitulo());
         holder.tvFecha.setText("Fecha: " + fallo.getFecha());
         holder.tvHora.setText("Hora: " + fallo.getHora());
-        holder.tvEstado.setText("Arreglado");
-
 
         holder.tvVerDetalles.setOnClickListener(v -> {
-            Intent intent = new Intent(holder.itemView.getContext(), ver_fallo_activity.class);
-            intent.putExtra("titulo", fallo.getTitulo());
-            intent.putExtra("fecha", fallo.getFecha());
-            intent.putExtra("hora", fallo.getHora());
-            holder.itemView.getContext().startActivity(intent);
+            listener.onVerDetallesClick(fallo);
         });
 
 
@@ -74,7 +68,6 @@ public class FalloAdapter extends RecyclerView.Adapter<FalloAdapter.FalloViewHol
             tvTitulo = itemView.findViewById(R.id.tv_titulo_fallo);
             tvFecha = itemView.findViewById(R.id.tv_fecha_fallo);
             tvHora = itemView.findViewById(R.id.tv_hora_fallo);
-            tvEstado = itemView.findViewById(R.id.tv_estado);
             tvVerDetalles = itemView.findViewById(R.id.tv_ver_detalles);
         }
     }
