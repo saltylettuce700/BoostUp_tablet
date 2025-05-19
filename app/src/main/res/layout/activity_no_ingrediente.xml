@@ -46,10 +46,10 @@
 
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="wrap_content"
+            android:layout_width="123dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Falta: "
+            android:text="Falta"
             android:textColor="@color/white"
             android:textSize="60sp"
             android:textStyle="bold" />
@@ -59,10 +59,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="monospace"
-            android:text="INSERTE INGREDIENTE"
+            android:text="un ingrediente"
             android:textColor="@color/white"
-            android:textSize="48sp" />
+            android:textSize="60sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout

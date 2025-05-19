@@ -55,6 +55,11 @@ public class BD {
         void onError(String mensaje);
     }
 
+    public interface BooleanCallback {
+        void onSuccess(boolean preparable);
+        void onFailure();
+    }
+
     private void getRequest(String route, Callback callback) {
 
         OkHttpClient client = new OkHttpClient();
@@ -445,6 +450,93 @@ public class BD {
         });
     }
 
+    public void VerificarInventario(String id_pedido, BooleanCallback callback){
+        Preferences preferences = new Preferences(context);
+        int num_maquina = preferences.obtenerNumMaquina();
+
+        String ruta = "machine/inventario/"+ num_maquina + "/disponible/"+id_pedido;
+
+        getRequest(ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onFailure();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String respuesta = response.body().string(); // trim para evitar espacios o saltos de línea
+                    boolean preparable = Boolean.parseBoolean(respuesta);
+                    callback.onSuccess(preparable);
+                } else {
+                    callback.onFailure();
+                }
+            }
+        });
+
+    }
+
+    public void getDetallesPedido(String id, JsonCallback callback) {
+        String ruta = "pedido/"+ id+"/";
+
+        getRequest(ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() -> Toast.makeText(context, "Error de red", Toast.LENGTH_SHORT).show());
+                callback.onError("Error de red: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    callback.onError("Error HTTP: " + response.message());
+                    return;
+                }
+
+                ResponseBody responseBody = response.body();
+                if (responseBody == null) {
+                    runOnUiThread(() -> Toast.makeText(context, "Pedido no encontrado", Toast.LENGTH_SHORT).show());
+                    callback.onError("Pedido no encontrado");
+                    return;
+                }
+
+                try {
+                    String json = responseBody.string();
+                    JsonObject obj = gson.fromJson(json, JsonObject.class);
+
+                    String proteina = obj.get("proteina").getAsString();
+                    double monto = obj.get("monto_total").getAsDouble();
+                    String fechacompra = obj.get("fec_hora_compra").getAsString();
+                    String estadocanje = obj.get("estado_canje").getAsString();
+                    int proteinagr = obj.get("proteina_gr").getAsInt();
+                    String sabor = obj.get("sabor").getAsString();
+                    String tipoSabor = obj.get("tipo_saborizante").getAsString();
+                    String marcaProteina = obj.get("proteina_marca").getAsString();
+                    String marcaSaborizante = obj.get("saborizante_marca").getAsString();
+                    boolean consumible = obj.get("es_consumible").getAsBoolean();
+
+                    String curcumaMarca = obj.has("curcuma_marca") && !obj.get("curcuma_marca").isJsonNull()
+                            ? obj.get("curcuma_marca").getAsString()
+                            : "N/A";
+
+                    int curcumaGr = obj.has("curcuma_gr") && !obj.get("curcuma_gr").isJsonNull()
+                            ? obj.get("curcuma_gr").getAsInt()
+                            : 0;
+
+                    // Retornar los datos al callback
+                    callback.onSuccess(obj);
+
+                } catch (Exception e) {
+                    callback.onError("Error al procesar JSON: " + e.getMessage());
+                }
+            }
+
+
+        });
+    }
+
+
+
     /*------------------PUTS-------------------------------*/
 
     public void CambiarUbicacionMaquina(String ubi, String token){
@@ -512,6 +604,29 @@ public class BD {
         });
 
 
+    }
+
+    public void CanjearPedido(String id_pedido, float humedad, Callback callback){
+        String ruta = "machine/canjearPedido/";
+
+        Preferences preferences = new Preferences(context);
+        int num_maquina = preferences.obtenerNumMaquina();
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("machine_id", num_maquina);
+            jsonObject.put("order_id", id_pedido);
+            jsonObject.put("current_humidity", humedad);
+        } catch (JSONException e) {
+            runOnUiThread(()->{
+                Toast.makeText(context, "Error con los datos del pedido", Toast.LENGTH_SHORT).show();
+
+            });
+            return;
+        }
+
+        PostRequest(ruta, jsonObject, callback);
     }
 
 }
