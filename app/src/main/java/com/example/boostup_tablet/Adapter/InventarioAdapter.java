@@ -197,6 +197,15 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
                 Toast.makeText(context, "Producto reabastecido", Toast.LENGTH_SHORT).show();
             }
         });
+
+        btnCerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
     }
 
