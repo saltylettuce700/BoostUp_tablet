@@ -47,7 +47,6 @@
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:text="1500 kg"
         android:textColor="@color/black"
         android:textSize="24sp" />
 

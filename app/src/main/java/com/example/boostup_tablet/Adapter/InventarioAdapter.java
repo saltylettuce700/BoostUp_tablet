@@ -44,7 +44,8 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
     public void onBindViewHolder(@NonNull InventarioViewHolder holder, int position) {
         Producto producto = productos.get(position);
         holder.tvProducto.setText(producto.getNombre());
-        holder.tvCantidad.setText(producto.getCantidad() + " kg");
+        String unidad = producto.getTipo().equalsIgnoreCase("saborizante") ? "ml" : "g";
+        holder.tvCantidad.setText(producto.getCantidad() + " " + unidad);
         holder.tvCaducidad.setText(producto.getCaducidad());
         holder.imgProducto.setImageResource(producto.getImagenResId());
 
