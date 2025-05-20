@@ -45,9 +45,13 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
         Producto producto = productos.get(position);
         holder.tvProducto.setText(producto.getNombre());
         String unidad = producto.getTipo().equalsIgnoreCase("saborizante") ? "ml" : "g";
+        String tipo = producto.getTipo();
         holder.tvCantidad.setText(producto.getCantidad() + " " + unidad);
         holder.tvCaducidad.setText(producto.getCaducidad());
-        holder.imgProducto.setImageResource(producto.getImagenResId());
+
+        int resId = obtenerImagenPorProducto(producto.getTipo(), producto.getNombre());
+        holder.imgProducto.setImageResource(resId != 0 ? resId : R.drawable.cross_icon);
+
 
         holder.btnReabastecer.setOnClickListener(v -> {
             // Aquí puedes manejar la lógica cuando se presiona el botón
@@ -142,5 +146,33 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
         dialog.show();
 
 
+    }
+
+    private int obtenerImagenPorProducto(String tipo, String valorClave) {
+        if (valorClave == null) return 0;
+
+        valorClave = valorClave.toLowerCase();
+
+        switch (tipo) {
+            case "proteina":
+                if (valorClave.contains("pure and natural")) return R.drawable.pure_natural_img;
+                if (valorClave.contains("falcon")) return R.drawable.falcon;
+                return 0;
+
+            case "saborizante":
+                if (valorClave.contains("fresa")||valorClave.contains("strawberry")) return R.drawable.strawberry_milk;
+                if (valorClave.contains("chocolate")) return R.drawable.choco_milk;
+                if (valorClave.contains("vainilla")|| valorClave.contains("vanilla")) return R.drawable.vanilla_milk;
+
+
+                return 0;
+
+            case "curcuma":
+                if (valorClave.contains("nature heart")) return R.drawable.nature_heart_turmeric;
+
+                return R.drawable.cross_icon;
+        }
+
+        return 0;
     }
 }

@@ -177,13 +177,12 @@ public class inventario_activity extends AppCompatActivity {
             }
         });
 
-//        listaProductos.add(new Producto("Proteína Whey", 10, "05/12/2024", R.drawable.bebida_img));
-//        listaProductos.add(new Producto("Creatina", 15, "10/01/2025", R.drawable.bebida_img));
-//        listaProductos.add(new Producto("BCAA", 5, "20/03/2025", R.drawable.bebida_img));
-//        listaProductos.add(new Producto("Glutamina", 8, "30/04/2025", R.drawable.bebida_img));
 
-//        adapter = new InventarioAdapter(this, listaProductos);
-//        recyclerView.setAdapter(adapter);
+
+
+
 
     }
+
+
 }
