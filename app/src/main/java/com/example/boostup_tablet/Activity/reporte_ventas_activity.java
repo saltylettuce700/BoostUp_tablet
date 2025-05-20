@@ -254,19 +254,52 @@ public class reporte_ventas_activity extends AppCompatActivity {
 
             // Llenar gráfica de líneas
             List<ILineDataSet> dataSets = new ArrayList<>();
-            int colorIndex = 0;
+//            int colorIndex = 0;
+//            for (Map.Entry<String, float[]> entry : mapaSabores.entrySet()) {
+//                ArrayList<Entry> entries = new ArrayList<>();
+//                for (int i = 0; i < 12; i++) {
+//                    entries.add(new Entry(i, entry.getValue()[i]));
+//                }
+//                LineDataSet set = new LineDataSet(entries, entry.getKey());
+//                set.setColor(ColorTemplate.COLORFUL_COLORS[colorIndex % ColorTemplate.COLORFUL_COLORS.length]);
+//                set.setCircleColor(set.getColor());
+//                set.setDrawValues(true);
+//                set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+//                dataSets.add(set);
+//                colorIndex++;
+//            }
+
             for (Map.Entry<String, float[]> entry : mapaSabores.entrySet()) {
                 ArrayList<Entry> entries = new ArrayList<>();
                 for (int i = 0; i < 12; i++) {
                     entries.add(new Entry(i, entry.getValue()[i]));
                 }
+
                 LineDataSet set = new LineDataSet(entries, entry.getKey());
-                set.setColor(ColorTemplate.COLORFUL_COLORS[colorIndex % ColorTemplate.COLORFUL_COLORS.length]);
-                set.setCircleColor(set.getColor());
+
+                String sabor = entry.getKey().toLowerCase();
+                switch (sabor) {
+                    case "chocolate":
+                        set.setColor(0xFF6F4E37); // color café
+                        set.setCircleColor(0xFF6F4E37);
+                        break;
+                    case "fresa":
+                        set.setColor(0xFFE53935); // rojo fuerte
+                        set.setCircleColor(0xFFE53935);
+                        break;
+                    case "vainilla":
+                        set.setColor(0xFFFFEB3B); // amarillo
+                        set.setCircleColor(0xFFFFEB3B);
+                        break;
+                    default:
+                        set.setColor(ColorTemplate.COLORFUL_COLORS[0]); // color por defecto
+                        set.setCircleColor(ColorTemplate.COLORFUL_COLORS[0]);
+                        break;
+                }
+
                 set.setDrawValues(true);
                 set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
                 dataSets.add(set);
-                colorIndex++;
             }
 
             LineData lineData = new LineData(dataSets);
