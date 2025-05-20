@@ -60,6 +60,12 @@ public class BD {
         void onFailure();
     }
 
+    public interface InventarioCallback {
+        void onSuccess(JsonObject inventarioCompleto);
+        void onError(String mensaje);
+    }
+
+
     private void getRequest(String route, Callback callback) {
 
         OkHttpClient client = new OkHttpClient();
@@ -535,7 +541,109 @@ public class BD {
         });
     }
 
+    public void getInventarioMaquina(String token, InventarioCallback callback){
+        String ruta = "owner_or_tech/inventario/";
 
+        authGetRequest(token, ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onError("Error de conexión");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    try {
+                        JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+                        callback.onSuccess(obj);
+                    } catch (Exception e) {
+                        callback.onError("Error al procesar los datos");
+                    }
+                } else {
+                    callback.onError("Error en la respuesta del servidor");
+                }
+            }
+        });
+    }
+
+    public void getDetallesProteina(int id, JsonCallback callback){
+        String ruta = "proteina/"+id+"/detalles/";
+
+        getRequest(ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onError("Error de conexión");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    try {
+                        JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+                        callback.onSuccess(obj);
+                    } catch (Exception e) {
+                        callback.onError("Error al procesar datos");
+                    }
+                } else {
+                    callback.onError("Error en la respuesta del servidor");
+                }
+            }
+        });
+    }
+
+    public void getDetallesSaborizante(int id, JsonCallback callback){
+        String ruta = "saborizante/"+id+"/detalles";
+
+        getRequest(ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onError("Error de conexión");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    try {
+                        JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+                        callback.onSuccess(obj);
+                    } catch (Exception e) {
+                        callback.onError("Error al procesar datos");
+                    }
+                } else {
+                    callback.onError("Error en la respuesta del servidor");
+                }
+            }
+        });
+    }
+
+    public void getDetallesCurcuma(int id, JsonCallback callback){
+        String ruta= "curcuma/"+id+"/detalles/";
+
+        getRequest(ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onError("Error de conexión");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    try {
+                        JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+                        callback.onSuccess(obj);
+                    } catch (Exception e) {
+                        callback.onError("Error al procesar datos");
+                    }
+                } else {
+                    callback.onError("Error en la respuesta del servidor");
+                }
+            }
+        });
+    }
 
     /*------------------PUTS-------------------------------*/
 
