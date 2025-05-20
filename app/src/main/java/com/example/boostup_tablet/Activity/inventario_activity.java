@@ -3,6 +3,7 @@ package com.example.boostup_tablet.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -32,6 +33,7 @@ public class inventario_activity extends AppCompatActivity {
     private InventarioAdapter adapter;
     private List<Producto> listaProductos;
     private BD bd;
+    TextView txtFecPrev, txtFecLimite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,9 @@ public class inventario_activity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        txtFecPrev = findViewById(R.id.txt_fec_preventiva);
+        txtFecLimite = findViewById(R.id.txt_fec_limite);
 
         Intent intent1 = getIntent();
         String tokenTemp = intent1.getStringExtra("tokenTech");
@@ -56,6 +61,28 @@ public class inventario_activity extends AppCompatActivity {
 
         bd = new BD(this);
 
+        bd.getFechasReabastecimiento(token, new BD.JsonCallback() {
+            @Override
+            public void onSuccess(JsonObject obj) {
+
+                runOnUiThread(()->{
+                    String fecLimite = "Fecha limite de Reabastecimiento: " + obj.get("fec_limite_abasto").getAsString();
+                    String fecPrev = "Fecha Recomendada de Reabastecimiento: " + obj.get("fec_prev_abasto").getAsString();
+
+                    txtFecLimite.setText(fecLimite);
+                    txtFecPrev.setText(fecPrev);
+                });
+
+
+            }
+
+            @Override
+            public void onError(String mensaje) {
+                runOnUiThread(()->{
+                    Toast.makeText(inventario_activity.this, mensaje, Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
 
         // Cargar datos de prueba
         listaProductos = new ArrayList<>();

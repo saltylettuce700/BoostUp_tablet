@@ -67,7 +67,7 @@
                     android:background="@color/base_gray" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/txt_fec_preventiva"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
@@ -76,6 +76,18 @@
                     android:text="Fecha Calculada aproximada de reabastecimiento: "
                     android:textColor="@color/black"
                     android:textSize="24sp" />
+                <TextView
+                    android:id="@+id/txt_fec_limite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:text="Fecha Calculada aproximada de reabastecimiento: "
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
+
+
 
 
                 <GridLayout
