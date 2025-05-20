@@ -5,6 +5,9 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,8 @@ public class leer_qr_activity extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;
 
+
+    ImageView btn_options;
 
 
     @Override
@@ -61,6 +66,8 @@ public class leer_qr_activity extends AppCompatActivity {
         mainLayout = findViewById(R.id.main);
         textView = findViewById(R.id.textView);
 
+        btn_options = findViewById(R.id.btn_options);
+
 
         mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +79,37 @@ public class leer_qr_activity extends AppCompatActivity {
                 intentIntegrator.setCameraId(1); // Usa la cámara frontal
                 intentIntegrator.initiateScan();
             }
+        });
+
+        btn_options.setOnClickListener(v -> {
+            // Muestra el Toast de depuración
+            Toast.makeText(leer_qr_activity.this, "Botón de opciones clickeado", Toast.LENGTH_SHORT).show();
+
+            // Crear un PopupMenu
+            PopupMenu popupMenu = new PopupMenu(leer_qr_activity.this, btn_options);
+
+            // Inflar el menú
+            getMenuInflater().inflate(R.menu.options, popupMenu.getMenu());
+
+            // Manejar las opciones seleccionadas en el menú
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.option1) {
+                    // Redirigir a la actividad de Dueño
+                    Intent intent = new Intent(leer_qr_activity.this, signin_dueno_Activity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (item.getItemId() == R.id.option2) {
+                    // Redirigir a la actividad de Técnico
+                    Intent intent = new Intent(leer_qr_activity.this, signin_tech_Activity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            });
+
+
+            // Mostrar el PopupMenu
+            popupMenu.show();
         });
 
 
