@@ -115,7 +115,10 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
         EditText ET_caducidad = dialogView.findViewById(R.id.ET_caducidad);
         ImageView btnCerrar = dialogView.findViewById(R.id.btnCerrar);
 
+        ImageView imgProductodialog = dialogView.findViewById(R.id.imgProductodialog);
+
         tv_producto.setText(producto.getNombre());
+        imgProductodialog.setImageResource(obtenerImagenPorProducto(producto.getTipo(), producto.getNombre()));
 
         ET_caducidad.setOnClickListener(view -> {
             // Obtener la fecha actual
