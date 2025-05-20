@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ public class resumen_pedido_activity extends AppCompatActivity {
     TextView txtBebidaUsername, txtPrecio, txtFecha, txtNombreProteina, txtCantidadProte, txtMarcaProte;
     TextView txtSabor, txtTipoSaborizante, txtMarcaSaborizante, txtMarcaCurcuma, txtCantidadCurcuma;
     Button bt_siguiente;
+
+    ImageView img1, img2, img3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,11 @@ public class resumen_pedido_activity extends AppCompatActivity {
 
         bt_siguiente = findViewById(R.id.button3);
 
+
+        img1 = findViewById(R.id.imgProducto1);
+        img2 = findViewById(R.id.imgProducto2);
+        img3 = findViewById(R.id.imgProducto3);
+
         BD bd = new BD(this);
 
         bd.getDetallesPedido(id_pedido, new BD.JsonCallback() {
@@ -67,7 +75,7 @@ public class resumen_pedido_activity extends AppCompatActivity {
                         // Extraer datos desde el JSON
                         String proteina = obj.get("proteina").getAsString();
                         double monto = obj.get("monto_total").getAsDouble();
-                        String fechaCompra = obj.get("fec_hora_compra").getAsString();
+                        String fechaCompra = obj.get("fec_hora_compra").getAsString().split("T")[0]; // Solo la fecha, sin la hora;
                         // String estadoCanje = obj.get("estado_canje").getAsString(); // Si lo quieres usar, puedes agregar otro TextView
                         int proteinaGr = obj.get("proteina_gr").getAsInt();
                         String sabor = obj.get("sabor").getAsString();
@@ -95,6 +103,31 @@ public class resumen_pedido_activity extends AppCompatActivity {
                         txtMarcaSaborizante.setText(marcaSaborizante);
                         txtMarcaCurcuma.setText(curcumaMarca);
                         txtCantidadCurcuma.setText(curcumaGr + " gr");
+
+
+                        /*ImageView imageBackground = findViewById(R.id.imageView2);
+                        switch (sabor.toLowerCase()) {
+                            case "chocolate":
+                                imageBackground.setImageResource(R.drawable.choco_pedido_min);
+                                break;
+                            case "vainilla":
+                                imageBackground.setImageResource(R.drawable.vanilla_pedido_min);
+                                break;
+                            case "fresa":
+                                imageBackground.setImageResource(R.drawable.strawberry_pedido_min);
+                                break;
+                            default:
+                                imageBackground.setImageResource(R.drawable.bebida_img); // Imagen por defecto
+                                break;
+                        }*/
+
+                        int resID1 = obtenerImagenPorProducto("Proteínas", proteina);
+                        int resID2 = obtenerImagenPorProducto("Saborizantes",sabor);
+                        int resID3 = obtenerImagenPorProducto("Cúrcuma y Jengibre",curcumaMarca);
+
+                        img1.setImageResource(resID1);
+                        img2.setImageResource(resID2);
+                        img3.setImageResource(resID3);
 
                     } catch (Exception e) {
                         Toast.makeText(resumen_pedido_activity.this, "Error al mostrar datos: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -150,5 +183,33 @@ public class resumen_pedido_activity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private int obtenerImagenPorProducto(String categoria, String valorClave) {
+        if (valorClave == null) return 0;
+
+        valorClave = valorClave.toLowerCase();
+
+        switch (categoria) {
+            case "Proteínas":
+                if (valorClave.contains("pure and natural")) return R.drawable.pure_natural_img;
+                if (valorClave.contains("falcon")) return R.drawable.falcon;
+                return 0;
+
+            case "Saborizantes":
+                if (valorClave.contains("fresa")||valorClave.contains("strawberry")) return R.drawable.strawberry_milk;
+                if (valorClave.contains("chocolate")) return R.drawable.choco_milk;
+                if (valorClave.contains("vainilla")|| valorClave.contains("vanilla")) return R.drawable.vanilla_milk;
+
+
+                return 0;
+
+            case "Cúrcuma y Jengibre":
+                if (valorClave.contains("nature heart")) return R.drawable.nature_heart_turmeric;
+
+                return R.drawable.cross_icon;
+        }
+
+        return 0;
     }
 }
