@@ -71,6 +71,7 @@ public class home_dueno_activity extends AppCompatActivity {
             // Acción para Inventario
             Intent intent = new Intent(this, inventario_activity.class);
             intent.putExtra("tokenOwner", token);
+            intent.putExtra("desde_dueno", true); //
             startActivity(intent);
             Toast.makeText(this, "Inventario", Toast.LENGTH_SHORT).show();
         });

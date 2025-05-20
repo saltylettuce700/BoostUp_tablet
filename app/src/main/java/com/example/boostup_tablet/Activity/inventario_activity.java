@@ -51,6 +51,11 @@ public class inventario_activity extends AppCompatActivity {
         }
         String token = tokenTemp;
 
+
+        boolean desdeDueno = getIntent().getBooleanExtra("desde_dueno", false);
+
+        Toast.makeText(inventario_activity.this, "DESDE DUENO" + desdeDueno, Toast.LENGTH_SHORT).show();
+
         recyclerView = findViewById(R.id.recyclerViewInventario);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -163,7 +168,8 @@ public class inventario_activity extends AppCompatActivity {
                         }
 
                         // Cargar los datos en el RecyclerView
-                        adapter = new InventarioAdapter(inventario_activity.this, listaProductos, token);
+
+                        adapter = new InventarioAdapter(inventario_activity.this, listaProductos, token, desdeDueno);
                         recyclerView.setAdapter(adapter);
 
                     } catch (Exception e) {

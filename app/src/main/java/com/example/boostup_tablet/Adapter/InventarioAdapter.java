@@ -30,10 +30,15 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
     private Context context;
     private String token;
 
-    public InventarioAdapter(Context context, List<Producto> productos, String token) {
+    private boolean desdeDueno;
+
+
+    public InventarioAdapter(Context context, List<Producto> productos, String token, boolean desdeDueno) {
         this.context = context;
         this.productos = productos;
         this.token = token;
+
+        this.desdeDueno = desdeDueno;
     }
 
     @NonNull
@@ -56,13 +61,20 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
         holder.imgProducto.setImageResource(resId != 0 ? resId : R.drawable.cross_icon);
 
 
-        holder.btnReabastecer.setOnClickListener(v -> {
-            // Aquí puedes manejar la lógica cuando se presiona el botón
-            System.out.println("Reabasteciendo " + producto.getNombre());
+        if (desdeDueno) {
+            holder.btnReabastecer.setVisibility(View.INVISIBLE);
+        } else {
+            holder.btnReabastecer.setVisibility(View.VISIBLE);
 
-            showReabastecerDialog(producto);
+            holder.btnReabastecer.setOnClickListener(v -> {
+                // Aquí puedes manejar la lógica cuando se presiona el botón
+                System.out.println("Reabasteciendo " + producto.getNombre());
 
-        });
+                showReabastecerDialog(producto);
+
+            });
+        }
+
     }
 
     @Override
@@ -82,6 +94,8 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
             tvCantidad = itemView.findViewById(R.id.tvCantidad);
             tvCaducidad = itemView.findViewById(R.id.tvCaducidad);
             btnReabastecer = itemView.findViewById(R.id.btnReabastecer);
+
+
         }
     }
 
