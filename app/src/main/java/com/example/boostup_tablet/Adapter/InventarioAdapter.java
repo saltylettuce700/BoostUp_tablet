@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.boostup_tablet.ConexionBD.BD;
 import com.example.boostup_tablet.R;
 
 import java.util.Calendar;
@@ -23,14 +24,16 @@ import java.util.List;
 
 import POJO.Producto;
 
-public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.InventarioViewHolder>  {
+public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.InventarioViewHolder> {
 
     private List<Producto> productos;
     private Context context;
+    private String token;
 
-    public InventarioAdapter(Context context, List<Producto> productos) {
+    public InventarioAdapter(Context context, List<Producto> productos, String token) {
         this.context = context;
         this.productos = productos;
+        this.token = token;
     }
 
     @NonNull
@@ -58,6 +61,7 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
             System.out.println("Reabasteciendo " + producto.getNombre());
 
             showReabastecerDialog(producto);
+
         });
     }
 
@@ -90,9 +94,8 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
         dialog.setContentView(dialogView);
 
 
-
         // Configurar botones
-        Button btnReabastecer = dialogView.findViewById(R.id.btnReabastecer);
+        Button btnReabastecer = dialogView.findViewById(R.id.btnReabastecerDialog);
         TextView tv_producto = dialogView.findViewById(R.id.tv_producto);
 
         EditText ET_caducidad = dialogView.findViewById(R.id.ET_caducidad);
@@ -110,7 +113,7 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
             // Crear el DatePickerDialog con la fecha actual como predeterminada
             DatePickerDialog datePickerDialog = new DatePickerDialog(context, (datePicker, year, month, dayOfMonth) -> {
                 // Formatear la fecha seleccionada
-                String fecha = dayOfMonth + "/" + (month + 1) + "/" + year;
+                String fecha = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth);
                 ET_caducidad.setText(fecha); // Mostrar la fecha en el EditText
                 producto.setCaducidad(fecha); // Actualizar la caducidad en el objeto Producto
             }, anio, mes, dia);
@@ -122,30 +125,65 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
         });
 
 
+//        btnReabastecer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Acción de continuar
+//
+//                String nuevaCaducidad = ET_caducidad.getText().toString();
+//                if (!nuevaCaducidad.isEmpty()) {
+//                    producto.setCaducidad(nuevaCaducidad); // Actualizar cantidad
+//                    notifyDataSetChanged(); // Notificar cambio en el RecyclerView
+//                    dialog.dismiss();
+//                }
+//
+//                dialog.dismiss();
+//                Toast.makeText(context, "REABASTECIENDO", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+
         btnReabastecer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Acción de continuar
+                String nuevaCaducidad = ET_caducidad.getText().toString().trim();
 
-                String nuevaCaducidad = ET_caducidad.getText().toString();
-                if (!nuevaCaducidad.isEmpty()) {
-                    producto.setCaducidad(nuevaCaducidad); // Actualizar cantidad
-                    notifyDataSetChanged(); // Notificar cambio en el RecyclerView
-                    dialog.dismiss();
+                if (nuevaCaducidad.isEmpty()) {
+                    Toast.makeText(context, "Por favor selecciona una fecha de caducidad", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
-                dialog.dismiss();
-                Toast.makeText(context, "REABASTECIENDO", Toast.LENGTH_SHORT).show();
+                // Aquí obtenemos la fecha actual y le sumamos un mes para el fec_limite
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.MONTH, 1);
+                String fec_limite = calendar.get(Calendar.YEAR) + "-" +
+                        String.format("%02d", (calendar.get(Calendar.MONTH) + 1)) + "-" +
+                        String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
 
+                String tipo = producto.getTipo();
+
+                if (tipo.equalsIgnoreCase("proteina")) {
+                    // Llamar a la función de BD para proteína
+                    BD bd = new BD(context);
+                    bd.reabastecerProteina(token, producto.getId(), producto.getId_inv_proteina(), 500, producto.getCaducidad(), fec_limite);
+                } else if (tipo.equalsIgnoreCase("saborizante")) {
+                    BD bd = new BD(context);
+                    bd.reabastecerSaborizante(token, producto.getId(), producto.getId_inv_proteina(), 800, producto.getCaducidad(), fec_limite);
+                } else if (tipo.equalsIgnoreCase("curcuma")) {
+                    BD bd = new BD(context);
+                    bd.reabastecerCurcuma(token, producto.getId(), producto.getId_inv_proteina(), 100, producto.getCaducidad(), fec_limite);
+                }
+
+                // Actualizar visualmente
+                producto.setCaducidad(nuevaCaducidad);
+                producto.setCantidad(500);
+                notifyDataSetChanged();
+
+                dialog.dismiss();
+                Toast.makeText(context, "Producto reabastecido", Toast.LENGTH_SHORT).show();
             }
         });
-
-        btnCerrar.setOnClickListener(v -> dialog.dismiss());
-
-        // Mostrar el diálogo
         dialog.show();
-
-
     }
 
     private int obtenerImagenPorProducto(String tipo, String valorClave) {

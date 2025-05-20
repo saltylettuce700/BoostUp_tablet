@@ -31,6 +31,7 @@ public class inventario_activity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private InventarioAdapter adapter;
     private List<Producto> listaProductos;
+    private BD bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class inventario_activity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewInventario);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        BD bd = new BD(this);
+        bd = new BD(this);
 
 
         // Cargar datos de prueba
@@ -63,13 +64,14 @@ public class inventario_activity extends AppCompatActivity {
             public void onSuccess(JsonObject respuesta) {
                 runOnUiThread(() -> {
                     try {
-                        listaProductos = new ArrayList<>();
+                        listaProductos.clear();
 
                         if (respuesta.has("Proteina")) {
                             JsonArray proteinas = respuesta.getAsJsonArray("Proteina");
                             for (JsonElement elemento : proteinas) {
                                 JsonObject obj = elemento.getAsJsonObject();
                                 int id = obj.get("proteina").getAsInt();
+                                int id_inv = obj.get("id_inv_proteina").getAsInt();
                                 int cantidad = obj.get("cantidad_gr").getAsInt();
                                 String caducidad = obj.get("fec_caducidad").getAsString();
 
@@ -77,7 +79,7 @@ public class inventario_activity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(JsonObject detalles) {
                                         String nombre = "Proteína " + detalles.get("nombre").getAsString();
-                                        Producto producto = new Producto(id, "proteina", nombre, cantidad, caducidad, R.drawable.bebida_img);
+                                        Producto producto = new Producto(id, id_inv, "proteina", nombre, cantidad, caducidad, R.drawable.bebida_img);
                                         runOnUiThread(() -> {
                                             listaProductos.add(producto);
                                             adapter.notifyDataSetChanged();
@@ -86,7 +88,7 @@ public class inventario_activity extends AppCompatActivity {
                                     @Override
                                     public void onError(String error) {
                                         // Si hay error, aún así lo agregamos por ID
-                                        Producto producto = new Producto(id, "proteina", "Proteína #" + id, cantidad, caducidad, R.drawable.bebida_img);
+                                        Producto producto = new Producto(id, id_inv, "proteina", "Proteína #" + id, cantidad, caducidad, R.drawable.bebida_img);
                                         runOnUiThread(() -> {
                                             listaProductos.add(producto);
                                             adapter.notifyDataSetChanged();
@@ -101,6 +103,7 @@ public class inventario_activity extends AppCompatActivity {
                             for (JsonElement elemento : saborizantes) {
                                 JsonObject obj = elemento.getAsJsonObject();
                                 int id = obj.get("saborizante").getAsInt();
+                                int id_inv = obj.get("id_inv_sabor").getAsInt();
                                 int cantidad = obj.get("cantidad_ml").getAsInt();
                                 String caducidad = obj.get("fec_caducidad").getAsString();
 
@@ -108,7 +111,7 @@ public class inventario_activity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(JsonObject detalles) {
                                         String nombre = "Saborizante " + detalles.get("marca").getAsString() + " " + detalles.get("sabor").getAsString();
-                                        Producto producto = new Producto(id, "saborizante", nombre, cantidad, caducidad, R.drawable.bebida_img);
+                                        Producto producto = new Producto(id, id_inv, "saborizante", nombre, cantidad, caducidad, R.drawable.bebida_img);
                                         runOnUiThread(() -> {
                                             listaProductos.add(producto);
                                             adapter.notifyDataSetChanged();
@@ -117,7 +120,7 @@ public class inventario_activity extends AppCompatActivity {
 
                                     @Override
                                     public void onError(String error) {
-                                        Producto producto = new Producto(id, "saborizante", "Saborizante #" + id, cantidad, caducidad, R.drawable.bebida_img);
+                                        Producto producto = new Producto(id, id_inv, "saborizante", "Saborizante #" + id, cantidad, caducidad, R.drawable.bebida_img);
                                         runOnUiThread(() -> {
                                             listaProductos.add(producto);
                                             adapter.notifyDataSetChanged();
@@ -132,6 +135,7 @@ public class inventario_activity extends AppCompatActivity {
                             for (JsonElement elemento : curcumas) {
                                 JsonObject obj = elemento.getAsJsonObject();
                                 int id = obj.get("curcuma").getAsInt();
+                                int id_inv = obj.get("id_inv_curcuma").getAsInt();
                                 int cantidad = obj.get("cantidad_gr").getAsInt();
                                 String caducidad = obj.get("fec_caducidad").getAsString();
 
@@ -139,7 +143,7 @@ public class inventario_activity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(JsonObject detalles) {
                                         String nombre = "Cúrcuma " + detalles.get("marca").getAsString();
-                                        Producto producto = new Producto(id, "curcuma", nombre, cantidad, caducidad, R.drawable.bebida_img);
+                                        Producto producto = new Producto(id, id_inv, "curcuma", nombre, cantidad, caducidad, R.drawable.bebida_img);
                                         runOnUiThread(() -> {
                                             listaProductos.add(producto);
                                             adapter.notifyDataSetChanged();
@@ -148,7 +152,7 @@ public class inventario_activity extends AppCompatActivity {
 
                                     @Override
                                     public void onError(String error) {
-                                        Producto producto = new Producto(id, "curcuma", "Cúrcuma #" + id, cantidad, caducidad, R.drawable.bebida_img);
+                                        Producto producto = new Producto(id, id_inv, "curcuma", "Cúrcuma #" + id, cantidad, caducidad, R.drawable.bebida_img);
                                         runOnUiThread(() -> {
                                             listaProductos.add(producto);
                                             adapter.notifyDataSetChanged();
@@ -159,7 +163,7 @@ public class inventario_activity extends AppCompatActivity {
                         }
 
                         // Cargar los datos en el RecyclerView
-                        adapter = new InventarioAdapter(inventario_activity.this, listaProductos);
+                        adapter = new InventarioAdapter(inventario_activity.this, listaProductos, token);
                         recyclerView.setAdapter(adapter);
 
                     } catch (Exception e) {

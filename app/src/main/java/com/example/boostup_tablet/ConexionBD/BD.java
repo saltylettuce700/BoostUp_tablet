@@ -677,6 +677,105 @@ public class BD {
 
     }
 
+    public void reabastecerProteina(String token, int id_inv, int id_proteina, int cantidad_gr, String fecha_caducidad, String fecha_limite){
+        String ruta = "technician/inventario/proteina/";
+
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("id_inv_proteina", id_inv);
+            jsonObject.put("proteina", id_proteina);
+            jsonObject.put("cantidad_gr", cantidad_gr);
+            jsonObject.put("fec_caducidad", fecha_caducidad);
+            jsonObject.put("fec_limite_abasto", fecha_limite);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        String jsonBody = jsonObject.toString();
+
+        putAuthRequest(token, ruta, jsonBody, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(()->{
+                    Toast.makeText(context, "Fallo: "+e, Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                runOnUiThread(()->{
+                    Toast.makeText(context, "Proteina Reabastecida", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+    public void reabastecerSaborizante(String token, int id_inv, int id_sabor, int cantidad_ml, String fecha_caducidad, String fecha_limite){
+        String ruta = "technician/inventario/saborizante/";
+
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("id_inv_sabor", id_inv);
+            jsonObject.put("saborizante", id_sabor);
+            jsonObject.put("cantidad_ml", cantidad_ml);
+            jsonObject.put("fec_caducidad", fecha_caducidad);
+            jsonObject.put("fec_limite_abasto", fecha_limite);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        String jsonBody = jsonObject.toString();
+
+        putAuthRequest(token, ruta, jsonBody, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(()->{
+                    Toast.makeText(context, "Fallo: "+e, Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                runOnUiThread(()->{
+                    Toast.makeText(context, "Saborizante Reabastecido", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+    public void reabastecerCurcuma(String token, int id_inv, int id_curcuma, int cantidad_gr, String fecha_caducidad, String fecha_limite){
+        String ruta = "technician/inventario/curcuma/";
+
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("id_inv_curcuma", id_inv);
+            jsonObject.put("curcuma", id_curcuma);
+            jsonObject.put("cantidad_gr", cantidad_gr);
+            jsonObject.put("fec_caducidad", fecha_caducidad);
+            jsonObject.put("fec_limite_abasto", fecha_limite);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        String jsonBody = jsonObject.toString();
+
+        putAuthRequest(token, ruta, jsonBody, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(()->{
+                    Toast.makeText(context, "Fallo: "+e, Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                runOnUiThread(()->{
+                    Toast.makeText(context, "Curcuma Reabastecida", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
     /*------------------POSTS-------------------------------*/
 
     public void agregarFalloMaquina (String token, int tipo, String fec_hora, String descripcion, Callback callback){
