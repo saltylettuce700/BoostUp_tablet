@@ -645,6 +645,32 @@ public class BD {
         });
     }
 
+    public void getFechasReabastecimiento(String token, JsonCallback callback){
+        String ruta = "owner_or_tech/fechasReabastecimiento/";
+
+        authGetRequest(token, ruta, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onError("Error de conexión");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    try {
+                        JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+                        callback.onSuccess(obj);
+                    } catch (Exception e) {
+                        callback.onError("Error al procesar datos");
+                    }
+                } else {
+                    callback.onError("Error en la respuesta del servidor");
+                }
+            }
+        });
+    }
+
     /*------------------PUTS-------------------------------*/
 
     public void CambiarUbicacionMaquina(String ubi, String token){
