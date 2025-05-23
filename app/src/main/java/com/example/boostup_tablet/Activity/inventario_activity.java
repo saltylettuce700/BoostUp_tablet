@@ -59,7 +59,7 @@ public class inventario_activity extends AppCompatActivity {
 
         boolean desdeDueno = getIntent().getBooleanExtra("desde_dueno", false);
 
-        Toast.makeText(inventario_activity.this, "DESDE DUENO" + desdeDueno, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(inventario_activity.this, "DESDE DUENO" + desdeDueno, Toast.LENGTH_SHORT).show();
 
         recyclerView = findViewById(R.id.recyclerViewInventario);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

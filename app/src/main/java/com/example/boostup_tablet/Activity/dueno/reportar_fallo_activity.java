@@ -146,7 +146,7 @@ public class reportar_fallo_activity extends AppCompatActivity {
                 if (position > 0) {
                     Toast.makeText(reportar_fallo_activity.this,
                             "Seleccionaste: " + seleccionado.getNombre() + " (ID: " + idSeleccionado + ")",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT);
                 }
             }
 
@@ -156,7 +156,7 @@ public class reportar_fallo_activity extends AppCompatActivity {
                 int idSeleccionado = 1;
                 Toast.makeText(reportar_fallo_activity.this,
                         "Se seleccionó el ID por defecto: " + idSeleccionado,
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT);
             }
         });
 

@@ -65,7 +65,6 @@ public class home_tech_activity extends AppCompatActivity {
             Intent intent = new Intent(this, inventario_activity.class);
             intent.putExtra("tokenTech", token);
             startActivity(intent);
-            Toast.makeText(this, "Inventario", Toast.LENGTH_SHORT).show();
         });
 
         findViewById(R.id.asignar_section).setOnClickListener(v -> {
@@ -75,7 +74,6 @@ public class home_tech_activity extends AppCompatActivity {
             intent.putExtra("tokenTech", token);
             startActivity(intent);
 
-            Toast.makeText(this, "Reportar fallo", Toast.LENGTH_SHORT).show();
 
         });
 
@@ -84,7 +82,6 @@ public class home_tech_activity extends AppCompatActivity {
             Intent intent = new Intent(this, reportar_fallo_activity.class);
             intent.putExtra("tokenTech", token);
             startActivity(intent);
-            Toast.makeText(this, "Reportar fallo", Toast.LENGTH_SHORT).show();
 
         });
 
@@ -93,14 +90,12 @@ public class home_tech_activity extends AppCompatActivity {
             Intent intent = new Intent(this, historial_fallo_activity.class);
             intent.putExtra("tokenTech", token);
             startActivity(intent);
-            Toast.makeText(this, "Historial de fallos", Toast.LENGTH_SHORT).show();
         });
 
         findViewById(R.id.cerrar_sesion_section).setOnClickListener(v -> {
             // Acción para Cerrar Sesión
             finish();
             startActivity(new Intent(this, Idle_Activity.class));
-            Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
         });
     }
 }

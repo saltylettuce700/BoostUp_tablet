@@ -75,7 +75,7 @@ public class asignar_maquina_activity extends AppCompatActivity {
 
                 @Override
                 public void onError(String mensaje) {
-                    Toast.makeText(asignar_maquina_activity.this, "Error al obtener la info", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(asignar_maquina_activity.this, "Error al obtener los datos", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -86,7 +86,7 @@ public class asignar_maquina_activity extends AppCompatActivity {
                     if (!etNewPassword.getText().toString().isEmpty()){
                         bd.CambiarUbicacionMaquina(etNewPassword.getText().toString(), token);
                     } else {
-                        Toast.makeText(asignar_maquina_activity.this, "Asigne la ubicacion", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(asignar_maquina_activity.this, "Asigne la ubicación", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -101,7 +101,7 @@ public class asignar_maquina_activity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (et_numMaquina.getText().toString().isEmpty()){
-                        Toast.makeText(asignar_maquina_activity.this, "Favor de asignar id", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(asignar_maquina_activity.this, "Favor de asignar ID", Toast.LENGTH_SHORT).show();
                     }else {
                         int num_maquina = Integer.parseInt(et_numMaquina.getText().toString());
                         preferences.guardarNumMaquina(num_maquina);
@@ -116,7 +116,6 @@ public class asignar_maquina_activity extends AppCompatActivity {
 
         if (!"home_tech".equals(from) && preferences.obtenerNumMaquina() != 0) {
             startActivity(new Intent(this, Idle_Activity.class));
-            Toast.makeText(this, "maquina: " + preferences.obtenerNumMaquina(), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -127,7 +126,6 @@ public class asignar_maquina_activity extends AppCompatActivity {
             Intent intent = new Intent(this, home_tech_activity.class);
             intent.putExtra("tokenTech", token);
             startActivity(intent);
-            Toast.makeText(this, "Inventario", Toast.LENGTH_SHORT).show();
         });
 
 

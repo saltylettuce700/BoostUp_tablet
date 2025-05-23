@@ -72,8 +72,6 @@ public class Idle_Activity extends AppCompatActivity {
         });
 
         btn_options.setOnClickListener(v -> {
-            // Muestra el Toast de depuración
-            Toast.makeText(Idle_Activity.this, "Botón de opciones clickeado", Toast.LENGTH_SHORT).show();
 
             // Crear un PopupMenu
             PopupMenu popupMenu = new PopupMenu(Idle_Activity.this, btn_options);
