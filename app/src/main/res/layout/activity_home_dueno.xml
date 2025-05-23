@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".Activity.home_dueno_activity">
+    tools:context=".Activity.dueno.home_dueno_activity">
 
     <!-- ScrollView para habilitar el desplazamiento -->
     <ScrollView
