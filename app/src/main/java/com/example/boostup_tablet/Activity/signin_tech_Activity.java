@@ -71,8 +71,7 @@ public class signin_tech_Activity extends AppCompatActivity {
         });
 
         btn_options.setOnClickListener(v -> {
-            // Muestra el Toast de depuración
-            Toast.makeText(signin_tech_Activity.this, "Botón de opciones clickeado", Toast.LENGTH_SHORT).show();
+
 
             // Crear un PopupMenu
             PopupMenu popupMenu = new PopupMenu(signin_tech_Activity.this, btn_options);

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".Activity.home_dueno_activity">
+    tools:context=".Activity.dueno.home_dueno_activity">
 
     <!-- ScrollView para habilitar el desplazamiento -->
     <ScrollView
@@ -59,9 +59,10 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/logo_square" />
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/logo" />
+
             </LinearLayout>
 
             <FrameLayout

@@ -82,8 +82,6 @@ public class leer_qr_activity extends AppCompatActivity {
         });
 
         btn_options.setOnClickListener(v -> {
-            // Muestra el Toast de depuración
-            Toast.makeText(leer_qr_activity.this, "Botón de opciones clickeado", Toast.LENGTH_SHORT).show();
 
             // Crear un PopupMenu
             PopupMenu popupMenu = new PopupMenu(leer_qr_activity.this, btn_options);
