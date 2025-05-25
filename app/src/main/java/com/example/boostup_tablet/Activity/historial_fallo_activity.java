@@ -2,6 +2,8 @@ package com.example.boostup_tablet.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -12,6 +14,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.boostup_tablet.Activity.dueno.home_dueno_activity;
+import com.example.boostup_tablet.Activity.tecnico.home_tech_activity;
 import com.example.boostup_tablet.Adapter.FalloAdapter;
 import com.example.boostup_tablet.ConexionBD.BD;
 import com.example.boostup_tablet.R;
@@ -28,6 +32,7 @@ public class historial_fallo_activity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FalloAdapter adapter;
     private List<Fallo> listaFallos;
+    ImageButton bt_back;
 
 
     @Override
@@ -40,6 +45,8 @@ public class historial_fallo_activity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        bt_back = findViewById(R.id.imageButton);
 
         Intent intent1 = getIntent();
         String tokenTemp = intent1.getStringExtra("tokenTech");
@@ -55,13 +62,42 @@ public class historial_fallo_activity extends AppCompatActivity {
         recyclerView = findViewById(R.id.RV_historial);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        bt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean desdeDueno = getIntent().getBooleanExtra("desde_dueno", false);
+                boolean desdeTecnico = getIntent().getBooleanExtra("desde_tecnico", false);
+                if(desdeDueno){
+                    Intent intent = new Intent(historial_fallo_activity.this, home_dueno_activity.class);
+                    intent.putExtra("tokenOwner", token);
+                    startActivity(intent);
+                    finish();
+                } else if (desdeTecnico) {
+                    Intent intent = new Intent(historial_fallo_activity.this, home_tech_activity.class);
+                    intent.putExtra("tokenTech", token);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+
         BD bd = new BD(this);
 
         listaFallos = new ArrayList<>();
         adapter = new FalloAdapter(listaFallos, fallo -> {
+            boolean desdeDueno = getIntent().getBooleanExtra("desde_dueno", false);
+            boolean desdeTecnico = getIntent().getBooleanExtra("desde_tecnico", false);
             Intent intent = new Intent(historial_fallo_activity.this, ver_fallo_activity.class);
             intent.putExtra("token", token);
             intent.putExtra("fallo", fallo);
+            if (desdeDueno){
+                intent.putExtra("desde_dueno", true);
+                intent.putExtra("desde_tecnico", false);
+            } else if (desdeTecnico) {
+                intent.putExtra("desde_tecnico", true);
+                intent.putExtra("desde_dueno", false);
+            }
             startActivity(intent);
         });
         recyclerView.setAdapter(adapter);

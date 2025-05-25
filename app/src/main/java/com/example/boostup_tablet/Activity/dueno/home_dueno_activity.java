@@ -70,7 +70,8 @@ public class home_dueno_activity extends AppCompatActivity {
             // Acción para Inventario
             Intent intent = new Intent(this, inventario_activity.class);
             intent.putExtra("tokenOwner", token);
-            intent.putExtra("desde_dueno", true); //
+            intent.putExtra("desde_dueno", true);
+            intent.putExtra("desde_tecnico",false);
             startActivity(intent);
         });
 
@@ -78,6 +79,8 @@ public class home_dueno_activity extends AppCompatActivity {
             // Acción para Reportar Fallo
             Intent intent = new Intent(this, reportar_fallo_activity.class);
             intent.putExtra("tokenOwner", token);
+            intent.putExtra("desde_dueno", true);
+            intent.putExtra("desde_tecnico",false);
             startActivity(intent);
 
         });
@@ -86,6 +89,8 @@ public class home_dueno_activity extends AppCompatActivity {
             // Acción para Historial de Fallos
             Intent intent = new Intent(this, historial_fallo_activity.class);
             intent.putExtra("tokenOwner", token);
+            intent.putExtra("desde_dueno", true);
+            intent.putExtra("desde_tecnico",false);
             startActivity(intent);
         });
 

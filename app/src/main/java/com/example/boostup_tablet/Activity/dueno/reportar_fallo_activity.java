@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.boostup_tablet.Activity.inventario_activity;
+import com.example.boostup_tablet.Activity.tecnico.home_tech_activity;
 import com.example.boostup_tablet.ConexionBD.BD;
 import com.example.boostup_tablet.R;
 import com.google.gson.JsonArray;
@@ -41,6 +44,8 @@ import java.util.Locale;
 
 public class reportar_fallo_activity extends AppCompatActivity {
 
+    ImageButton bt_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,7 @@ public class reportar_fallo_activity extends AppCompatActivity {
 
         });
 
+        bt_back = findViewById(R.id.imageButton);
 
         Intent intent1 = getIntent();
         String tokenTemp = intent1.getStringExtra("tokenTech");
@@ -62,6 +68,24 @@ public class reportar_fallo_activity extends AppCompatActivity {
         String token = tokenTemp;
 
 
+        bt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean desdeDueno = getIntent().getBooleanExtra("desde_dueno", false);
+                boolean desdeTecnico = getIntent().getBooleanExtra("desde_tecnico", false);
+                if (desdeDueno) {
+                    Intent intent = new Intent(reportar_fallo_activity.this, home_dueno_activity.class);
+                    intent.putExtra("tokenOwner", token);
+                    startActivity(intent);
+                    finish();
+                } else if (desdeTecnico) {
+                    Intent intent = new Intent(reportar_fallo_activity.this, home_tech_activity.class);
+                    intent.putExtra("tokenTech", token);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
 
         EditText editText = findViewById(R.id.ET_descripcion);
         TextView charCount = findViewById(R.id.TV_charCount);
@@ -187,9 +211,22 @@ public class reportar_fallo_activity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             Toast.makeText(reportar_fallo_activity.this, "Fallo registrado correctamente", Toast.LENGTH_SHORT).show();
                             // Redirigir a pantalla principal
-                            Intent intent = new Intent(reportar_fallo_activity.this, home_dueno_activity.class);
+                            boolean desdeDueno = getIntent().getBooleanExtra("desde_dueno", false);
+                            boolean desdeTecnico = getIntent().getBooleanExtra("desde_tecnico", false);
+                            if(desdeDueno){
+                                Intent intent = new Intent(reportar_fallo_activity.this, home_dueno_activity.class);
+                                intent.putExtra("tokenOwner", token);
+                                startActivity(intent);
+                                finish();
+                            } else if (desdeTecnico) {
+                                Intent intent = new Intent(reportar_fallo_activity.this, home_tech_activity.class);
+                                intent.putExtra("tokenTech", token);
+                                startActivity(intent);
+                                finish();
+                            }
+                            /*Intent intent = new Intent(reportar_fallo_activity.this, home_dueno_activity.class);
                             startActivity(intent);
-                            finish();
+                            finish();*/
                         } else {
                             Toast.makeText(reportar_fallo_activity.this, "Error en la respuesta del servidor", Toast.LENGTH_SHORT).show();
                         }
