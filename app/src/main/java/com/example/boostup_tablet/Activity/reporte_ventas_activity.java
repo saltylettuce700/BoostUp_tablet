@@ -2,6 +2,8 @@ package com.example.boostup_tablet.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.boostup_tablet.Activity.dueno.home_dueno_activity;
 import com.example.boostup_tablet.Adapter.ReporteAdapter;
 import com.example.boostup_tablet.ConexionBD.BD;
 import com.example.boostup_tablet.R;
@@ -49,6 +52,7 @@ public class reporte_ventas_activity extends AppCompatActivity {
 
     BarChart ventasChart;
     LineChart saboresChart;
+    ImageButton bt_back;
 
 
     @Override
@@ -70,6 +74,18 @@ public class reporte_ventas_activity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView); // Asegúrate que este ID coincida con tu XML
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        bt_back = findViewById(R.id.imageButton);
+
+        bt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(reporte_ventas_activity.this, home_dueno_activity.class);
+                intent1.putExtra("tokenOwner", token);
+                startActivity(intent1);
+                finish();
+            }
+        });
 
         int anioActual = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
         int mesActual = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1;

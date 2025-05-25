@@ -64,6 +64,8 @@ public class home_tech_activity extends AppCompatActivity {
             // Acción para Inventario
             Intent intent = new Intent(this, inventario_activity.class);
             intent.putExtra("tokenTech", token);
+            intent.putExtra("desde_tecnico",true);
+            intent.putExtra("desde_dueno",false);
             startActivity(intent);
             Toast.makeText(this, "Inventario", Toast.LENGTH_SHORT).show();
         });
@@ -83,6 +85,8 @@ public class home_tech_activity extends AppCompatActivity {
             // Acción para Reportar Fallo
             Intent intent = new Intent(this, reportar_fallo_activity.class);
             intent.putExtra("tokenTech", token);
+            intent.putExtra("desde_tecnico",true);
+            intent.putExtra("desde_dueno",false);
             startActivity(intent);
             Toast.makeText(this, "Reportar fallo", Toast.LENGTH_SHORT).show();
 
@@ -92,6 +96,8 @@ public class home_tech_activity extends AppCompatActivity {
             // Acción para Historial de Fallos
             Intent intent = new Intent(this, historial_fallo_activity.class);
             intent.putExtra("tokenTech", token);
+            intent.putExtra("desde_tecnico",true);
+            intent.putExtra("desde_dueno",false);
             startActivity(intent);
             Toast.makeText(this, "Historial de fallos", Toast.LENGTH_SHORT).show();
         });

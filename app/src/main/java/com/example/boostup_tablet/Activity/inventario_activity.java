@@ -3,6 +3,7 @@ package com.example.boostup_tablet.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.boostup_tablet.Activity.dueno.home_dueno_activity;
+import com.example.boostup_tablet.Activity.tecnico.home_tech_activity;
 import com.example.boostup_tablet.Adapter.InventarioAdapter;
 import com.example.boostup_tablet.ConexionBD.BD;
 import com.example.boostup_tablet.R;
@@ -34,6 +37,7 @@ public class inventario_activity extends AppCompatActivity {
     private List<Producto> listaProductos;
     private BD bd;
     TextView txtFecPrev, txtFecLimite;
+    ImageButton bt_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,9 @@ public class inventario_activity extends AppCompatActivity {
 
         txtFecPrev = findViewById(R.id.txt_fec_preventiva);
         txtFecLimite = findViewById(R.id.txt_fec_limite);
+        bt_back = findViewById(R.id.imageButton);
+
+
 
         Intent intent1 = getIntent();
         String tokenTemp = intent1.getStringExtra("tokenTech");
@@ -56,6 +63,25 @@ public class inventario_activity extends AppCompatActivity {
         }
         String token = tokenTemp;
 
+
+        bt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean desdeDueno = getIntent().getBooleanExtra("desde_dueno", false);
+                boolean desdeTecnico = getIntent().getBooleanExtra("desde_tecnico", false);
+                if(desdeDueno){
+                    Intent intent = new Intent(inventario_activity.this, home_dueno_activity.class);
+                    intent.putExtra("tokenOwner", token);
+                    startActivity(intent);
+                    finish();
+                } else if (desdeTecnico) {
+                    Intent intent = new Intent(inventario_activity.this, home_tech_activity.class);
+                    intent.putExtra("tokenTech", token);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
 
         boolean desdeDueno = getIntent().getBooleanExtra("desde_dueno", false);
 
