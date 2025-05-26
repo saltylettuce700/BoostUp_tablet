@@ -25,8 +25,8 @@
 
     <LinearLayout
         android:id="@+id/reportar_fallo_section"
-        android:layout_width="500dp"
-        android:layout_height="500dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:background="@drawable/btn_holder_bg_white"
         android:clickable="true"
         android:gravity="center_vertical"
@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintVertical_bias="0.86" />
 
     <ProgressBar
         android:id="@+id/progressBar"

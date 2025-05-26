@@ -36,8 +36,8 @@
 
     <LinearLayout
         android:id="@+id/reportar_fallo_section"
-        android:layout_width="500dp"
-        android:layout_height="500dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:background="@drawable/btn_holder_bg_white"
         android:clickable="true"
         android:gravity="center_vertical"
