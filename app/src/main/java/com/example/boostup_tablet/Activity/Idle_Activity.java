@@ -24,12 +24,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.boostup_tablet.ConexionBD.BD;
 import com.example.boostup_tablet.R;
 
 import android.os.Handler;
 
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
@@ -89,6 +95,31 @@ public class Idle_Activity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        BD bd = new BD(this);
+
+        if (humedadReportada>=80){
+
+            bd.insertarHumedad(humedadReportada, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(()->{
+                        Toast.makeText(Idle_Activity.this, "Error registrando la humedad", Toast.LENGTH_SHORT).show();
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    runOnUiThread(()->{
+                        Toast.makeText(Idle_Activity.this, "Humedad registrada, avisando al tecnico", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(Idle_Activity.this, mantenimiento_activity.class);
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                    });
+                }
+            });
+
+        }
 
         mainLayout.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
