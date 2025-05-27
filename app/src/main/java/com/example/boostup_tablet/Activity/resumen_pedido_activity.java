@@ -102,6 +102,29 @@ public class resumen_pedido_activity extends AppCompatActivity {
 
         BD bd = new BD(this);
 
+        if (humedadReportada>=80){
+
+            bd.insertarHumedad(humedadReportada, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(()->{
+                        Toast.makeText(resumen_pedido_activity.this, "Error registrando la humedad", Toast.LENGTH_SHORT).show();
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    runOnUiThread(()->{
+                        Toast.makeText(resumen_pedido_activity.this, "Humedad registrada, avisando al tecnico", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(resumen_pedido_activity.this, mantenimiento_activity.class);
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                    });
+                }
+            });
+
+        }
+
         bd.getDetallesPedido(id_pedido, new BD.JsonCallback() {
             @Override
             public void onSuccess(JsonObject obj) {
