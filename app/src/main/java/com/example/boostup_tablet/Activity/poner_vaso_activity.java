@@ -26,6 +26,7 @@ public class poner_vaso_activity extends AppCompatActivity {
 
         findViewById(R.id.button3).setOnClickListener(v -> {
             // Acción para reporte de ventas
+
             Intent intent = new Intent(this, preparando_activity.class);
             startActivity(intent);
         });
