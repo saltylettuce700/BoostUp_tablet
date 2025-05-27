@@ -67,9 +67,9 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="32dp"
         android:backgroundTint="#679934"
+
         android:text="Empezar a preparar"
         android:textColor="@color/white"
-
         android:textSize="30dp"
         android:textStyle="bold"
         app:icon="@drawable/forward_icon"
