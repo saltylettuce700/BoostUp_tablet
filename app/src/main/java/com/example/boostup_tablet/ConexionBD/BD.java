@@ -893,4 +893,23 @@ public class BD {
         PostRequest(ruta, jsonObject, callback);
     }
 
+    public void insertarHumedad(float humedad, Callback callback){
+        String ruta = "machine/insertarHumedad/";
+
+        Preferences preferences = new Preferences(context);
+        int num_maquina = preferences.obtenerNumMaquina();
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("current_humidity", humedad);
+            jsonObject.put("machine_id", num_maquina);
+        } catch (JSONException e) {
+            runOnUiThread(()->{
+                Toast.makeText(context, "Error al registrar la humedad", Toast.LENGTH_SHORT).show();
+
+            });
+            return;
+        }
+    }
+
 }
