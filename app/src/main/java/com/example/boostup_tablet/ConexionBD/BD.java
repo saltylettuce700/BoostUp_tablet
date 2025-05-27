@@ -910,6 +910,8 @@ public class BD {
             });
             return;
         }
+
+        PostRequest(ruta, jsonObject, callback);
     }
 
 }

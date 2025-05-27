@@ -65,6 +65,8 @@ public class Idle_Activity extends AppCompatActivity {
 
     float humedadReportada = 0;
 
+    BD bd;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,9 @@ public class Idle_Activity extends AppCompatActivity {
 
         textView = findViewById(R.id.textView);
 
+
+        bd = new BD(this);
+
         // Iniciar el cambio de texto cada 5 segundos
         startTextSwitching();
 
@@ -96,30 +101,7 @@ public class Idle_Activity extends AppCompatActivity {
             return insets;
         });
 
-        BD bd = new BD(this);
 
-        if (humedadReportada>=80){
-
-            bd.insertarHumedad(humedadReportada, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    runOnUiThread(()->{
-                        Toast.makeText(Idle_Activity.this, "Error registrando la humedad", Toast.LENGTH_SHORT).show();
-                    });
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    runOnUiThread(()->{
-                        Toast.makeText(Idle_Activity.this, "Humedad registrada, avisando al tecnico", Toast.LENGTH_SHORT).show();
-                        Intent intent1 = new Intent(Idle_Activity.this, mantenimiento_activity.class);
-                        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent1);
-                    });
-                }
-            });
-
-        }
 
         mainLayout.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -295,6 +277,30 @@ public class Idle_Activity extends AppCompatActivity {
 
                 try {
                     humedadReportada = Float.parseFloat(text);
+
+                    BD localbd = new BD(Idle_Activity.this);
+
+                    if (humedadReportada > 60){
+                        Log.i("Humedad", "" + humedadReportada);
+                        localbd.insertarHumedad(humedadReportada, new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                runOnUiThread(()->{
+                                    Toast.makeText(Idle_Activity.this, "Error registrando la humedad", Toast.LENGTH_SHORT).show();
+                                });
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                runOnUiThread(()->{
+                                    Toast.makeText(Idle_Activity.this, "Humedad registrada, avisando al tecnico", Toast.LENGTH_SHORT).show();
+                                    Intent intent1 = new Intent(Idle_Activity.this, mantenimiento_activity.class);
+                                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent1);
+                                });
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                     Log.e("HumidityParse", e.getMessage());
                 }

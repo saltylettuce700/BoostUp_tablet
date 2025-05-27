@@ -71,6 +71,8 @@ public class resumen_pedido_activity extends AppCompatActivity {
 
     float gramosCurcuma = 0;
 
+    BD bd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,30 +113,7 @@ public class resumen_pedido_activity extends AppCompatActivity {
         img2 = findViewById(R.id.imgProducto2);
         img3 = findViewById(R.id.imgProducto3);
 
-        BD bd = new BD(this);
-
-        if (humedadReportada>=80){
-
-            bd.insertarHumedad(humedadReportada, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    runOnUiThread(()->{
-                        Toast.makeText(resumen_pedido_activity.this, "Error registrando la humedad", Toast.LENGTH_SHORT).show();
-                    });
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    runOnUiThread(()->{
-                        Toast.makeText(resumen_pedido_activity.this, "Humedad registrada, avisando al tecnico", Toast.LENGTH_SHORT).show();
-                        Intent intent1 = new Intent(resumen_pedido_activity.this, mantenimiento_activity.class);
-                        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent1);
-                    });
-                }
-            });
-
-        }
+        bd = new BD(this);
 
         bd.getDetallesPedido(id_pedido, new BD.JsonCallback() {
             @Override
@@ -240,7 +219,7 @@ public class resumen_pedido_activity extends AppCompatActivity {
                     public void onResponse(Call call, Response response) throws IOException {
                         if (response.isSuccessful()) {
                             webSocket.send("blink(3)");
-                            webSocket.close(1000, "Humidity purpouses finished");
+                            webSocket.close(1000, "Humidity purpousefs finished");
                             runOnUiThread(() -> {
                                 Toast.makeText(resumen_pedido_activity.this, "Pedido canjeado", Toast.LENGTH_SHORT).show();
                                 Intent intent1 = new Intent(resumen_pedido_activity.this, poner_vaso_activity.class);
@@ -383,6 +362,31 @@ public class resumen_pedido_activity extends AppCompatActivity {
 
                 try {
                     humedadReportada = Float.parseFloat(text);
+
+                    BD localbd = new BD(resumen_pedido_activity.this);
+
+                    if (humedadReportada > 60){
+                        localbd.insertarHumedad(humedadReportada, new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                runOnUiThread(()->{
+                                    Toast.makeText(resumen_pedido_activity.this, "Error registrando la humedad", Toast.LENGTH_SHORT).show();
+                                });
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                runOnUiThread(()->{
+                                    Toast.makeText(resumen_pedido_activity.this, "Humedad registrada, avisando al tecnico", Toast.LENGTH_SHORT).show();
+                                    Intent intent1 = new Intent(resumen_pedido_activity.this, mantenimiento_activity.class);
+                                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent1);
+                                });
+                            }
+                        });
+
+                    }
+
                 } catch (Exception e) {
                     Log.e("HumidityParse", e.getMessage());
                 }
