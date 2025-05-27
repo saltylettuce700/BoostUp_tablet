@@ -63,6 +63,14 @@ public class resumen_pedido_activity extends AppCompatActivity {
 
     ImageView img1, img2, img3;
 
+    int idProteina = 0;
+    int idSaborizante = 0;
+    float gramosProteina = 0;
+    float mililitrosSabor = 0;
+    float curcumaGr = 0;
+
+    float gramosCurcuma = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,12 +105,7 @@ public class resumen_pedido_activity extends AppCompatActivity {
 
         bt_siguiente = findViewById(R.id.button3);
 
-        AtomicInteger idProteina = new AtomicInteger();
-        AtomicInteger idSaborizante = new AtomicInteger();
-        AtomicReference<Float> gramosProteina = new AtomicReference<>((float) 0);
-        AtomicReference<Float> mililitrosSabor = new AtomicReference<>((float) 0);
-        float curcumaGr = 0;
-        AtomicReference<Float> gramosCurcuma = new AtomicReference<>((float) 0);
+
 
         img1 = findViewById(R.id.imgProducto1);
         img2 = findViewById(R.id.imgProducto2);
@@ -131,13 +134,12 @@ public class resumen_pedido_activity extends AppCompatActivity {
                                 : "N/A";
 
                         if (obj.has("curcuma_marca")) {
-                            gramosCurcuma.set(0.5F);
+                            gramosCurcuma = obj.get("curcuma_gr").getAsFloat();
                         }
-
-                        idProteina.set(obj.get("id_proteina").getAsInt());
-                        idSaborizante.set(obj.get("id_saborizante_ml").getAsInt());
-                        mililitrosSabor.set(obj.get("saborizante_ml").getAsFloat());
-                        gramosProteina.set(obj.get("proteina_gr").getAsFloat());
+                        idProteina = obj.get("id_proteina").getAsInt();
+                        idSaborizante = obj.get("id_saborizante").getAsInt();
+                        mililitrosSabor = obj.get("saborizante_ml").getAsFloat();
+                        gramosProteina = obj.get("proteina_gr").getAsFloat();
 
                         int curcumaGr = obj.has("curcuma_gr") && !obj.get("curcuma_gr").isJsonNull()
                                 ? obj.get("curcuma_gr").getAsInt()
@@ -215,7 +217,7 @@ public class resumen_pedido_activity extends AppCompatActivity {
                     public void onResponse(Call call, Response response) throws IOException {
                         if (response.isSuccessful()) {
                             webSocket.send("blink(3)");
-                            webSocket.close(100, "Humidity purpouses finished");
+                            webSocket.close(1000, "Humidity purpouses finished");
                             runOnUiThread(() -> {
                                 Toast.makeText(resumen_pedido_activity.this, "Pedido canjeado", Toast.LENGTH_SHORT).show();
                                 Intent intent1 = new Intent(resumen_pedido_activity.this, poner_vaso_activity.class);

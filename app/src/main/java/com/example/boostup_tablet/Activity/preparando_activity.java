@@ -136,7 +136,6 @@ public class preparando_activity extends AppCompatActivity {
             public void onOpen(WebSocket webSocket, okhttp3.Response response) {
                 Log.d(TAG, "WebSocket opened");
                 webSocket.send("blink(4)");
-                findViewById(R.id.button3).setEnabled(true);
             }
 
             @Override

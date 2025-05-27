@@ -68,7 +68,6 @@
         android:layout_margin="32dp"
         android:backgroundTint="#679934"
 
-        android:enabled="false"
         android:text="Empezar a preparar"
         android:textColor="@color/white"
         android:textSize="30dp"

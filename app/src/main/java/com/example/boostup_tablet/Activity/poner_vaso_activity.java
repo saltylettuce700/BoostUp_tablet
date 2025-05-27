@@ -35,16 +35,22 @@ public class poner_vaso_activity extends AppCompatActivity {
     private static final String TAG = "NSD"; // Para encontrar los logs facil
     private static final String SERVICE_TYPE = "_ws._tcp."; // El servicio que estamos buscando
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
-        nsdManager = (NsdManager) getSystemService(NSD_SERVICE);
-        initResolveListener();
-        initDiscoveryListener();
-        startServiceDiscovery();
+        setContentView(R.layout.activity_poner_vaso); // 🟢 Moved up — must be before accessing views
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        // now safe to use findViewById, extras, etc.
         Intent pedidoIntent = getIntent();
 
         int idProteina = pedidoIntent.getIntExtra("idProteina", -1);
@@ -53,23 +59,21 @@ public class poner_vaso_activity extends AppCompatActivity {
         float grCurcuma = pedidoIntent.getFloatExtra("grCurcuma", 0);
         float mlSaborizante = pedidoIntent.getFloatExtra("mlSaborizante", 0);
 
-        setContentView(R.layout.activity_poner_vaso);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        nsdManager = (NsdManager) getSystemService(NSD_SERVICE);
+        initResolveListener();
+        initDiscoveryListener();
+        startServiceDiscovery();
 
         findViewById(R.id.button3).setOnClickListener(v -> {
-            // Acción para reporte de ventas
-
             Intent intent = new Intent(this, preparando_activity.class);
-
             String cmd = "prepare(" + idProteina + ", " + grProteina + ", " + idSaborizante + ", " + mlSaborizante + ", " + grCurcuma + ")";
+
+            Log.d("CMD", cmd);
             webSocket.send(cmd);
             startActivity(intent);
         });
     }
+
 
     private void initDiscoveryListener() {
         discoveryListener = new NsdManager.DiscoveryListener() {
@@ -153,7 +157,6 @@ public class poner_vaso_activity extends AppCompatActivity {
             public void onOpen(WebSocket webSocket, okhttp3.Response response) {
                 Log.d(TAG, "WebSocket opened");
                 webSocket.send("blink(4)");
-                findViewById(R.id.button3).setEnabled(true);
             }
 
             @Override
