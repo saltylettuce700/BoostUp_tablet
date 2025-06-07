@@ -35,8 +35,6 @@ public class poner_vaso_activity extends AppCompatActivity {
     private static final String TAG = "NSD"; // Para encontrar los logs facil
     private static final String SERVICE_TYPE = "_ws._tcp."; // El servicio que estamos buscando
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,7 +154,7 @@ public class poner_vaso_activity extends AppCompatActivity {
             @Override
             public void onOpen(WebSocket webSocket, okhttp3.Response response) {
                 Log.d(TAG, "WebSocket opened");
-                webSocket.send("blink(4)");
+                webSocket.send("orderAskForBottle()");
             }
 
             @Override

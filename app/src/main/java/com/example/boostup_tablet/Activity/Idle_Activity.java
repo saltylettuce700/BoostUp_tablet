@@ -280,7 +280,7 @@ public class Idle_Activity extends AppCompatActivity {
 
                     BD localbd = new BD(Idle_Activity.this);
 
-                    if (humedadReportada > 60){
+                    if (humedadReportada > 80){
                         Log.i("Humedad", "" + humedadReportada);
                         localbd.insertarHumedad(humedadReportada, new Callback() {
                             @Override

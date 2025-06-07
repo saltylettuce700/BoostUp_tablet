@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,8 @@ public class resumen_pedido_activity extends AppCompatActivity {
     TextView txtSabor, txtTipoSaborizante, txtMarcaSaborizante, txtMarcaCurcuma, txtCantidadCurcuma;
     Button bt_siguiente;
 
+    ImageButton bt_atras;
+
     ImageView img1, img2, img3;
 
     int idProteina = 0;
@@ -72,6 +75,8 @@ public class resumen_pedido_activity extends AppCompatActivity {
     float gramosCurcuma = 0;
 
     BD bd;
+
+    boolean clickedNext = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +112,7 @@ public class resumen_pedido_activity extends AppCompatActivity {
 
         bt_siguiente = findViewById(R.id.button3);
 
-
+        bt_atras = findViewById(R.id.imageButton);
 
         img1 = findViewById(R.id.imgProducto1);
         img2 = findViewById(R.id.imgProducto2);
@@ -199,6 +204,7 @@ public class resumen_pedido_activity extends AppCompatActivity {
                     intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent1);
                     finish();
+                    clickedNext = true;
                 });
             }
         });
@@ -241,6 +247,25 @@ public class resumen_pedido_activity extends AppCompatActivity {
                 });
             }
         });
+
+        bt_atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent back_to_idle = new Intent(resumen_pedido_activity.this, Idle_Activity.class);
+
+                startActivity(back_to_idle);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (!clickedNext) {
+            webSocket.send("orderCanceled()");
+        }
     }
 
     private int obtenerImagenPorProducto(String categoria, String valorClave) {
@@ -352,7 +377,7 @@ public class resumen_pedido_activity extends AppCompatActivity {
             @Override
             public void onOpen(WebSocket webSocket, okhttp3.Response response) {
                 Log.d(TAG, "WebSocket opened");
-                webSocket.send("blink(2)");
+                webSocket.send("orderDetails()");
                 webSocket.send("readHumidity()");
             }
 
@@ -365,7 +390,7 @@ public class resumen_pedido_activity extends AppCompatActivity {
 
                     BD localbd = new BD(resumen_pedido_activity.this);
 
-                    if (humedadReportada > 60){
+                    if (humedadReportada > 80){
                         localbd.insertarHumedad(humedadReportada, new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
