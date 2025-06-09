@@ -151,7 +151,7 @@ public class resumen_pedido_activity extends AppCompatActivity {
                         gramosProteina = obj.get("proteina_gr").getAsFloat();
 
                         int curcumaGr = obj.has("curcuma_gr") && !obj.get("curcuma_gr").isJsonNull()
-                                ? obj.get("curcuma_gr").getAsInt()
+                                ? 5 //obj.get("curcuma_gr").getAsInt()
                                 : 0;
 
                         // Mostrar los datos en los TextView
@@ -165,7 +165,7 @@ public class resumen_pedido_activity extends AppCompatActivity {
                         txtTipoSaborizante.setText(tipoSabor);
                         txtMarcaSaborizante.setText(marcaSaborizante);
                         txtMarcaCurcuma.setText(curcumaMarca);
-                        txtCantidadCurcuma.setText(curcumaGr + " gr");
+                        txtCantidadCurcuma.setText(curcumaGr + " ml");
 
 
                         /*ImageView imageBackground = findViewById(R.id.imageView2);
