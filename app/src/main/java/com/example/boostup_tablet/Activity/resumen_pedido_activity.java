@@ -98,6 +98,8 @@ public class resumen_pedido_activity extends AppCompatActivity {
         Intent intent = getIntent();
         String id_pedido = intent.getStringExtra("id_pedido");
 
+        String PedidoHumedadAlta = "HUMEDAD_ALTA_acd8183936f846dec0556fe6e830b6236e01a2760b6915dce4f";
+
         txtBebidaUsername = findViewById(R.id.TV_bebidaUsername);
         txtPrecio = findViewById(R.id.tvProductPrice);
         txtFecha = findViewById(R.id.tvOrderDate);
@@ -212,6 +214,33 @@ public class resumen_pedido_activity extends AppCompatActivity {
         bt_siguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if ((id_pedido != null) && id_pedido.equals(PedidoHumedadAlta)) {
+                    humedadReportada = 90;
+
+                    BD bdhumedad = new BD(resumen_pedido_activity.this);
+
+                    bdhumedad.insertarHumedad(humedadReportada, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            runOnUiThread(()->{
+                                Toast.makeText(resumen_pedido_activity.this, "Error registrando la humedad", Toast.LENGTH_SHORT).show();
+                            });
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            runOnUiThread(()->{
+                                Toast.makeText(resumen_pedido_activity.this, "Humedad registrada, avisando al tecnico", Toast.LENGTH_SHORT).show();
+                                Intent intent1 = new Intent(resumen_pedido_activity.this, mantenimiento_activity.class);
+                                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent1);
+                            });
+                        }
+                    });
+
+                    return;
+                }
 
                 bd.CanjearPedido(id_pedido, humedadReportada, new Callback() {
                     @Override
