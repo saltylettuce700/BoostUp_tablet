@@ -194,7 +194,7 @@ public class inventario_activity extends AppCompatActivity {
                                 JsonObject obj = elemento.getAsJsonObject();
                                 int id = obj.get("curcuma").getAsInt();
                                 int id_inv = obj.get("id_inv_curcuma").getAsInt();
-                                int cantidad = obj.get("cantidad_gr").getAsInt();
+                                int cantidad = (int)(obj.get("cantidad_gr").getAsFloat()/16.5);
                                 String caducidad = obj.get("fec_caducidad").getAsString();
 
                                 bd.getDetallesCurcuma(id, new BD.JsonCallback() {

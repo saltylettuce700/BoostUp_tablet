@@ -53,6 +53,9 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
         Producto producto = productos.get(position);
         holder.tvProducto.setText(producto.getNombre());
         String unidad = producto.getTipo().equalsIgnoreCase("saborizante") ? "ml" : "g";
+        if(producto.getTipo().equals("curcuma")){
+            unidad = "ml";
+        }
         String tipo = producto.getTipo();
         holder.tvCantidad.setText(producto.getCantidad() + " " + unidad);
         holder.tvCaducidad.setText(producto.getCaducidad());
@@ -182,18 +185,20 @@ public class InventarioAdapter extends  RecyclerView.Adapter<InventarioAdapter.I
                 if (tipo.equalsIgnoreCase("proteina")) {
                     // Llamar a la función de BD para proteína
                     BD bd = new BD(context);
-                    bd.reabastecerProteina(token, producto.getId(), producto.getId_inv_proteina(), 500, producto.getCaducidad(), fec_limite);
+                    bd.reabastecerProteina(token, producto.getId(), producto.getId_inv_proteina(), 100, producto.getCaducidad(), fec_limite);
+                    producto.setCantidad(100);
                 } else if (tipo.equalsIgnoreCase("saborizante")) {
                     BD bd = new BD(context);
-                    bd.reabastecerSaborizante(token, producto.getId(), producto.getId_inv_proteina(), 800, producto.getCaducidad(), fec_limite);
+                    bd.reabastecerSaborizante(token, producto.getId(), producto.getId_inv_proteina(), 120, producto.getCaducidad(), fec_limite);
+                    producto.setCantidad(120);
                 } else if (tipo.equalsIgnoreCase("curcuma")) {
                     BD bd = new BD(context);
-                    bd.reabastecerCurcuma(token, producto.getId(), producto.getId_inv_proteina(), 100, producto.getCaducidad(), fec_limite);
+                    bd.reabastecerCurcuma(token, producto.getId(), producto.getId_inv_proteina(), 6187, producto.getCaducidad(), fec_limite);
+                    producto.setCantidad(375);
                 }
 
                 // Actualizar visualmente
                 producto.setCaducidad(nuevaCaducidad);
-                producto.setCantidad(500);
                 notifyDataSetChanged();
 
                 dialog.dismiss();
